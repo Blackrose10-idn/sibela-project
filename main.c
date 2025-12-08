@@ -3,9 +3,7 @@
 #include "model/window.h"
 #include "update/update.h"
 #include "views/drawView.h"
-#include "data/initDb.h"
 #include "data/staf.h"
-#include <stdlib.h>
 
 int main()
 {
@@ -42,7 +40,6 @@ int main()
     defaultWindow.members[4].image = LoadTexture("assets/images/member/nabilah.png");
     defaultWindow.dataFetchers.admin[0] = findAllStaff;
 
-    readAscii("logo.txt", defaultWindow.asciis.logo);
     defaultWindow.images.logo = LoadTexture("assets/images/logo_sibela.png");
     // findAllStaff(&defaultWindow.datas, defaultWindow.dbConn);
     SetTargetFPS(120);
