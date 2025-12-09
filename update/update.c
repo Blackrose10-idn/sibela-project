@@ -9,12 +9,12 @@ void updateView(windowModel *windowM)
         windowM->shouldClose = 1;
         break;
     case KEY_F2:
-        windowM->currWindow = HOME;
+        windowM->currWindow = STAFHOME;
         break;
     }
     switch (windowM->currWindow)
     {
-    case HOME:
+    case STAFHOME:
         switch (ch)
         {
         case KEY_W:

@@ -5,11 +5,19 @@ void drawRootView(windowModel *windowM)
     ClearBackground(TERTIARY);
     switch (windowM->currWindow)
     {
-    case HOME:
+    case STAFHOME:
         // drawHeader();
         drawHome(windowM);
         break;
     case LOGINSTAFF:
+        drawHeader(windowM);
+        drawLogin(windowM);
+        break;
+    case LOGINPENGAJAR:
+        drawHeader(windowM);
+        drawLogin(windowM);
+        break;
+    case LOGINMURID:
         drawHeader(windowM);
         drawLogin(windowM);
         break;

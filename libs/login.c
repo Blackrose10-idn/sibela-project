@@ -20,6 +20,6 @@ void loginFunction(windowModel *windowM)
         strcpy(windowM->authUser.nama, loginStaf.nama);
         strcpy(windowM->authUser.role, loginStaf.role);
         printf("awikwok");
-        windowM->currWindow = HOME;
+        windowM->currWindow = STAFHOME;
     }
 }
