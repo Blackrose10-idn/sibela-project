@@ -27,6 +27,25 @@ void loginFunction(windowModel *windowM)
         }
         break;
     case LOGINMURID:
+        Murid loginMurid = findMuridbyPhoneNum(windowM->loginData.phoneNumber.text, windowM->dbConn);
+
+        if (loginMurid.id_num == -1)
+            return;
+        // printf("loginaw: %d\n", strcmp(loginMurid.password, windowM->loginData.password.text));
+
+        if (strcmp(loginMurid.password, windowM->loginData.password.text) == 0)
+        {
+
+            strcpy(windowM->loginData.email.text, "\0");
+            strcpy(windowM->loginData.password.text, "\0");
+            windowM->loginData.password.charLen = 0;
+            windowM->loginData.email.charLen = 0;
+
+            strcpy(windowM->authUser.id, loginMurid.id_murid);
+            strcpy(windowM->authUser.nama, loginMurid.nama);
+            strcpy(windowM->authUser.role, "MURID");
+            windowM->currWindow = STAFHOME;
+        }
         break;
     case LOGINPENGAJAR:
         break;

@@ -27,7 +27,7 @@ time_t parseDate(char strDate[])
 {
     struct tm tm_info = {0};
 
-    sscanf(strDate, "%d-%d-%d 0:0:0", &tm_info.tm_mday, &tm_info.tm_mon, &tm_info.tm_year, &tm_info.tm_hour, &tm_info.tm_min, &tm_info.tm_sec);
+    sscanf(strDate, "%d-%d-%d %d:%d:%d", &tm_info.tm_year, &tm_info.tm_mon, &tm_info.tm_mday, &tm_info.tm_hour, &tm_info.tm_min, &tm_info.tm_sec);
     tm_info.tm_year -= 1900;
     tm_info.tm_mon -= 1;
 

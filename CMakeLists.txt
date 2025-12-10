@@ -16,6 +16,7 @@ views/landingView.c
 views/memberView.c
 data/initDb.c
 data/staf.c
+data/murid.c
 components/header.c
 )
 

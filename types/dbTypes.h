@@ -22,13 +22,14 @@ typedef enum
 
 typedef struct
 {
-    char id[30];
-    char nama[50];
+    int id_num;
+    char id_murid[7];
+    char nama[101];
     time_t tanggal_lahir;
-    tingkat_enum tingkat;
+    int tingkat;
     time_t tanggal_masuk;
-    char no_hp[20];
-    char alamat[150];
+    char no_hp[16];
+    char password[101];
 } Murid;
 
 typedef struct
