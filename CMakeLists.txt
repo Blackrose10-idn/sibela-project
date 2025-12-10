@@ -17,6 +17,7 @@ views/memberView.c
 data/initDb.c
 data/staf.c
 data/murid.c
+data/pengajar.c
 components/header.c
 )
 

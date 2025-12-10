@@ -35,6 +35,17 @@ typedef struct
 typedef struct
 {
     int id_num;
+    char id_pengajar[7];
+    char nama[101];
+    time_t tanggal_lahir;
+    time_t tanggal_masuk;
+    char no_hp[16];
+    char password[101];
+} Pengajar;
+
+typedef struct
+{
+    int id_num;
     char id_staff[30];
     char role[20];
     char nama[255];
