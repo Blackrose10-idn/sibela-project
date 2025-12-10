@@ -10,7 +10,7 @@ Sistem bimbingan belajar (SIBELA) is our final project for our first semester
 - Nabilah Tri Utami (0920250044)
 - Rasya Bintang Priyanto (0920250048)
 
-## Techstac
+## Techstack
 
 - C
 - Raylib (UI Framework)
