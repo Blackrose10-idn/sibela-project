@@ -56,6 +56,16 @@ typedef struct
     char email[100];
 } Staf;
 
+typedef struct
+{
+    int id_num;
+    char id_ruangan[6];
+    char lokasi[100];
+    char deskripsi[100];
+} Ruangan;
+
+
+
 // typedef struct
 //     {
 //         SQLINTEGER id_num;
