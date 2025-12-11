@@ -147,7 +147,7 @@ QUERYSTATUS createPengajar(data *datas, int *nPage, SQLHDBC *dbConn, Pengajar ne
     }
 }
 
-QUERYSTATUS updateStaff(data *datas, int *nPage, SQLHDBC *dbConn, Pengajar updatedPengajar)
+QUERYSTATUS updatedPengajar(data *datas, int *nPage, SQLHDBC *dbConn, Pengajar updatedPengajar)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -182,7 +182,7 @@ QUERYSTATUS updateStaff(data *datas, int *nPage, SQLHDBC *dbConn, Pengajar updat
     }
 }
 
-QUERYSTATUS deleteStaff(data *datas, int *nPage, SQLHDBC *dbConn, Pengajar updatedPengajar)
+QUERYSTATUS deletePengajar(data *datas, int *nPage, SQLHDBC *dbConn, Pengajar updatedPengajar)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
