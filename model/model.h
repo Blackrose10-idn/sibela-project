@@ -12,17 +12,13 @@ typedef struct
     SQLSMALLINT nStaf;
     Pengajar pengajars[100];
     SQLSMALLINT nPengajar;
-    int page;
-    int totalPages;
-} data;
-
-typedef struct
-{
     Murid murids[100];
     SQLSMALLINT nMurid;
     int page;
     int totalPages;
-} dataMurid;
+} data;
+
+
 
 typedef enum
 {
