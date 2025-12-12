@@ -14,6 +14,8 @@ typedef struct
     SQLSMALLINT nPengajar;
     Murid murids[100];
     SQLSMALLINT nMurid;
+    Ruangan ruangans[100];
+    SQLSMALLINT nRuangan;
     int page;
     int totalPages;
 } data;
