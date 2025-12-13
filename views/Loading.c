@@ -55,16 +55,13 @@ void LoadingScreen(windowModel *windowM, float progress)
     int screenWidth  = GetScreenWidth();
     int screenHeight = GetScreenHeight();
 
-    // --- Load Logo Sekali ---
     static Texture2D logo = {0};
     if (logo.id == 0)
         logo = LoadTexture("assets/images/sibela_Versi2.png");
 
-    // ===== ANIMASI GLOW =====
     float glow = (sinf(GetTime() * 3.0f) + 1.0f) * 0.5f;
     int alphaGlow = (int)(glow * 120.0f);
 
-    // ===== POSISI LOGO =====
     Vector2 logoPos = {
         (screenWidth  - logo.width)  / 2.0f + 40,
         (screenHeight / 2.0f) - logo.height - 40
@@ -72,7 +69,6 @@ void LoadingScreen(windowModel *windowM, float progress)
 
     DrawTexture(logo, logoPos.x, logoPos.y, WHITE);
 
-    // ===== LOADING BAR =====
     int barWidth  = 600;
     int barHeight = 22;
 
@@ -81,19 +77,14 @@ void LoadingScreen(windowModel *windowM, float progress)
         logoPos.y + logo.height + 70
     };
 
-    // Background bar
     DrawRectangle(barPos.x, barPos.y, barWidth, barHeight, Fade(BLUE, 0.25f));
 
-    // Filled bar
     DrawRectangle(barPos.x, barPos.y, barWidth * progress, barHeight, Fade(BLUE, 0.9f));
 
-    // Glow overlay
     DrawRectangle(barPos.x, barPos.y, barWidth * progress, barHeight, (Color){0, 150, 255, alphaGlow});
 
-    // Border
     DrawRectangleLines(barPos.x, barPos.y, barWidth, barHeight, BLUE);
 
-    // ===== LOADING TEXT =====
     char persen[16];
     sprintf(persen, "%d%%", (int)(progress * 100));
 
