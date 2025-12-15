@@ -52,13 +52,17 @@ void findAllMapel(data *datas, int *nPage, SQLHDBC *dbConn)
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 }
 
-QUERYSTATUS createMapel(data *datas, int *nPage, SQLHDBC *dbConn, Mapel newMapel)
+QUERYSTATUS createMapel(InputField fields[], SQLHDBC *dbConn)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
     int count;
     SQLUSMALLINT rowStatus[100];
     char *dateBuff;
+
+    Mapel newMapel;
+
+    strcpy(newMapel.nama_mapel, fields[1].value.text);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO mapel (nama_mapel) VALUES (?)", SQL_NTS);
@@ -113,7 +117,7 @@ QUERYSTATUS updateMapel(data *datas, int *nPage, SQLHDBC *dbConn, Mapel updatedM
     }
 }
 
-QUERYSTATUS deleteMapel(data *datas, int *nPage, SQLHDBC *dbConn, Mapel updatedMapel)
+QUERYSTATUS deleteMapel( SQLHDBC *dbConn, Mapel updatedMapel)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -131,7 +135,6 @@ QUERYSTATUS deleteMapel(data *datas, int *nPage, SQLHDBC *dbConn, Mapel updatedM
     }
 
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
-
     switch (ret)
     {
     case SQL_SUCCESS:
