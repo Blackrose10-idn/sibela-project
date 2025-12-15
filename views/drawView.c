@@ -1,12 +1,20 @@
 #include "drawView.h"
+#include "Loading.h"
 
 void drawRootView(windowModel *windowM)
 {
     ClearBackground(TERTIARY);
+
+    if (windowM->isLoading)
+    {
+        LoadingScreen(windowM, windowM->loadingTime / 2.0f);
+        return;
+    }
+
     switch (windowM->currWindow)
     {
     case STAFHOME:
-        drawHome(windowM);
+        drawStaffHome(windowM);
         break;
     case PENGAJARHOME:
         drawPengajarHome(windowM);

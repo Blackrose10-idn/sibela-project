@@ -9,8 +9,8 @@
 #include "../model/window.h"
 #include "../libs/utils.h"
 #include "../components/header.h"
-#include "../data/staf.h"
 #include "../constants/color.h"
 
-void LoadingScreen(windowModel *windowM);
+void LoadingScreen(windowModel *windowM, float progress);
+
 #endif

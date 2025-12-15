@@ -13,9 +13,9 @@
 
 Pengajar findPengajarbyPhoneNum(char PhoneNum[], SQLHDBC *dbConn);
 
-QUERYSTATUS createStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf newStaff);
-void findAllStaff(data *datas, int *nPage, SQLHDBC *dbConn);
-QUERYSTATUS updateStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf updatedStaff);
-QUERYSTATUS deleteStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf updatedStaff);
+QUERYSTATUS createPengajar(data *datas, int *nPage, SQLHDBC *dbConn, Pengajar newPengajar);
+void findAllPengajar(data *datas, int *nPage, SQLHDBC *dbConn);
+QUERYSTATUS updatedPengajar(data *datas, int *nPage, SQLHDBC *dbConn, Pengajar updatedPengajar);
+QUERYSTATUS deletePengajar(data *datas, int *nPage, SQLHDBC *dbConn, Pengajar updatedPengajar);
 
 #endif
