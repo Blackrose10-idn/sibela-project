@@ -48,7 +48,6 @@ Murid findMuridbyPhoneNum(char PhoneNum[], SQLHDBC *dbConn)
                        &foundRecord.no_hp, sizeof(foundRecord.no_hp), NULL);
             SQLGetData(stmt, 8, SQL_C_CHAR,
                        &foundRecord.password, sizeof(foundRecord.password), NULL);
-            
         }
     }
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
@@ -56,13 +55,8 @@ Murid findMuridbyPhoneNum(char PhoneNum[], SQLHDBC *dbConn)
     return foundRecord;
 }
 
-
 void findAllMurid(data *datas, int *nPage, SQLHDBC *dbConn)
 {
-
-    if (datas->nMurid > 0)
-        return;
-
     SQLHSTMT stmt;
     SQLRETURN ret;
     int count;
@@ -80,15 +74,20 @@ void findAllMurid(data *datas, int *nPage, SQLHDBC *dbConn)
     }
     SQLFreeHandle(SQL_HANDLE_STMT, stmt);
     *nPage = (int)ceil((float)count / 10);
-    printf("awikwok murid %d\n", *nPage);
+    int limit = 10;
+    int offset = (datas->page - 1) * limit;
+    *nPage = (int)ceil((float)count / limit);
+
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    ret = SQLExecDirect(stmt, (SQLCHAR *)"SELECT * FROM murid", SQL_NTS);
+    SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM murid ORDER BY tanggal_masuk DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
+
+    ret = SQLExecute(stmt);
     while (SQL_SUCCEEDED(ret = SQLFetch(stmt)))
     {
-        printf("Successfully fetched %lld rows\n", rowsFetched);
         char dateBuff[50];
         int i = (int)rowsFetched;
-        printf("awikwok %d\n", i);
 
         SQLGetData(stmt, 1, SQL_C_LONG,
                    &datas->murids[i].id_num, sizeof(datas->murids[i].id_num), NULL);
@@ -98,11 +97,13 @@ void findAllMurid(data *datas, int *nPage, SQLHDBC *dbConn)
                    &datas->murids[i].nama, sizeof(datas->murids[i].nama), NULL);
         SQLGetData(stmt, 4, SQL_C_CHAR,
                    datas->murids[rowsFetched].tanggal_lahir, sizeof(datas->murids[rowsFetched].tanggal_lahir), NULL);
-        SQLGetData(stmt, 5, SQL_C_CHAR,
-                   datas->murids[rowsFetched].tanggal_masuk, sizeof(datas->murids[rowsFetched].tanggal_masuk), NULL);
+        SQLGetData(stmt, 5, SQL_C_LONG,
+                   &datas->murids[rowsFetched].tingkat, sizeof(datas->murids[rowsFetched].tingkat), NULL);
         SQLGetData(stmt, 6, SQL_C_CHAR,
-                   &datas->murids[i].no_hp, sizeof(datas->murids[i].no_hp), NULL);
+                   datas->murids[rowsFetched].tanggal_masuk, sizeof(datas->murids[rowsFetched].tanggal_masuk), NULL);
         SQLGetData(stmt, 7, SQL_C_CHAR,
+                   &datas->murids[i].no_hp, sizeof(datas->murids[i].no_hp), NULL);
+        SQLGetData(stmt, 8, SQL_C_CHAR,
                    &datas->murids[i].password, sizeof(datas->murids[i].password), NULL);
         rowsFetched++;
     }
@@ -110,7 +111,7 @@ void findAllMurid(data *datas, int *nPage, SQLHDBC *dbConn)
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 }
 
-QUERYSTATUS createMurid(data *datas, int *nPage, SQLHDBC *dbConn, Murid newMurid)
+QUERYSTATUS createMurid(InputField fields[], SQLHDBC *dbConn)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -118,12 +119,21 @@ QUERYSTATUS createMurid(data *datas, int *nPage, SQLHDBC *dbConn, Murid newMurid
     SQLUSMALLINT rowStatus[100];
     char *dateBuff;
 
+    Murid newMurid;
+
+    strcpy(newMurid.nama, fields[1].value.text);
+    strcpy(newMurid.tanggal_lahir, fields[2].value.text);
+    strcpy(newMurid.no_hp, fields[3].value.text);
+    strcpy(newMurid.password, fields[4].value.text);
+    newMurid.tingkat = atoi(fields[5].value.text);
+
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO murid (nama, tanggal_lahir, no_hp, password) VALUES (?,?,?,?)", SQL_NTS);
+    SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO murid (nama, tanggal_lahir, no_hp, password,  tingkat) VALUES (?,?,?,?,?)", SQL_NTS);
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newMurid.nama), 0, newMurid.nama, 0, NULL);
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_DATE, strlen(newMurid.tanggal_lahir), 0, newMurid.tanggal_lahir, 0, NULL);
     SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newMurid.no_hp), 0, newMurid.no_hp, 0, NULL);
     SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newMurid.password), 0, newMurid.password, 0, NULL);
+    SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0 , 0, &newMurid.tingkat, 0, NULL);
     ret = SQLExecute(stmt);
 
     if (SQL_SUCCEEDED(ret))
@@ -177,7 +187,7 @@ QUERYSTATUS updateMurid(data *datas, int *nPage, SQLHDBC *dbConn, Murid updatedM
     }
 }
 
-QUERYSTATUS deleteMurid(data *datas, int *nPage, SQLHDBC *dbConn, Murid updatedMurid)
+QUERYSTATUS deleteMurid(SQLHDBC *dbConn, Murid updatedMurid)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;

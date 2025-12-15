@@ -1,5 +1,5 @@
-#ifndef MURIDHOME_MURID_UPDATE_H
-#define MURIDHOME_MURID_UPDATE_H
+#ifndef STAFFHOME_MURID_CREATE_H
+#define STAFFHOME_MURID_CREATE_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,6 +12,6 @@
 #include "../../../../../data/murid.h"
 #include "../../../../../constants/color.h"
 
-void drawMuridUpdate(windowModel *windowM);
+void drawMuridCreate(windowModel *windowM);
 
 #endif

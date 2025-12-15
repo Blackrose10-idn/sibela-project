@@ -1,5 +1,5 @@
-#ifndef murid
-#define murid
+#ifndef MURID_H
+#define MURID_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,13 +8,14 @@
 #include "../model/model.h"
 #include "../libs/utils.h"
 #include "../types/dbTypes.h"
+#include "../types/form.h"
 
 Murid findMuridbyPhoneNum(char PhoneNum[], SQLHDBC *dbConn);
 
 // CRUD
-QUERYSTATUS createMurid(data *datas, int *nPage, SQLHDBC *dbConn, Murid newMurid);
+QUERYSTATUS createMurid(InputField fields[], SQLHDBC *dbConn);
 void findAllMurid(data *datas, int *nPage, SQLHDBC *dbConn);
 QUERYSTATUS updateMurid(data *datas, int *nPage, SQLHDBC *dbConn, Murid updatedMurid);
-QUERYSTATUS deleteMurid(data *datas, int *nPage, SQLHDBC *dbConn, Murid updatedMurid);
+QUERYSTATUS deleteMurid(SQLHDBC *dbConn, Murid updatedMurid);
 
 #endif

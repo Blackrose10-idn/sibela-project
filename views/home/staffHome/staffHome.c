@@ -40,6 +40,9 @@ void drawStaffHome(windowModel *windowM)
         case 0:
             drawStaffRead(windowM);
             break;
+        case 1:
+            drawMuridRead(windowM);
+            break;
         case 2:
             drawPengajarRead(windowM);
             break;
@@ -60,6 +63,9 @@ void drawStaffHome(windowModel *windowM)
         {
         case 0:
             drawStaffCreate(windowM);
+            break;
+        case 1:
+            drawMuridCreate(windowM);
             break;
         case 2:
             drawPengajarCreate(windowM);

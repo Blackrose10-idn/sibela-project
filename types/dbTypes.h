@@ -20,6 +20,16 @@ typedef enum
     FRONTDESK
 } staf_role_enum;
 
+typedef enum{
+    STAFF,
+    MURID,
+    PENGAJAR,
+    RUANGAN,
+    MAPEL,
+    PEMBAYARAN,
+    JADWAL
+} ADMINSUBWINDOW;
+
 typedef struct
 {
     int id_num;
