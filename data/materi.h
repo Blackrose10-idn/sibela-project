@@ -11,13 +11,11 @@
 // #include "../libs/utils.h"
 #include "../types/dbTypes.h"
 // #include "../components/header.h"
+#include "../types/form.h"
 
-// void createStaf(int lastIndex);
-Staf findStafbyEmail(char email[], SQLHDBC *dbConn);
-
-QUERYSTATUS createStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf newStaff);
-void findAllStaff(data *datas, int *nPage, SQLHDBC *dbConn);
-QUERYSTATUS updateStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf updatedStaff);
-QUERYSTATUS deleteStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf updatedStaff);
+QUERYSTATUS createMateri(data *datas, int *nPage, SQLHDBC *dbConn, Materi newMateri);
+void findAllMateri(data *datas, int *nPage, SQLHDBC *dbConn);
+QUERYSTATUS updateMateri(data *datas, int *nPage, SQLHDBC *dbConn, Materi updatedMateri);
+QUERYSTATUS deleteMateri(data *datas, int *nPage, SQLHDBC *dbConn, Materi updatedMateri);
 
 #endif
