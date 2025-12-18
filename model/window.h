@@ -70,13 +70,6 @@ typedef struct
     Texture2D logoRobot;
 } image;
 
-typedef struct
-{
-    char id[20];
-    char nama[100];
-    char role[20];
-} user;
-
 typedef void (*fetcherFunc)(data *datas, int *nPage, SQLHDBC *dbConn);
 
 typedef struct

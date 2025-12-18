@@ -8,6 +8,13 @@ typedef short SQLSMALLINT;
 
 typedef struct
 {
+    char id[20];
+    char nama[100];
+    char role[20];
+} user;
+
+typedef struct
+{
     Staf staffs[100];
     SQLSMALLINT nStaf;
     Pengajar pengajars[100];
