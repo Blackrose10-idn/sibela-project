@@ -35,16 +35,17 @@ void drawMuridHome(windowModel *windowM)
     int start_y = 1080 / 2 - 300;
     int padding = 5;
     int font_size = 32;
-    switch (windowM->selectedPage)
-    {
-    case 0:
+    if (windowM->activeSubWindow == READ)
+        switch (windowM->selectedPage)
+        {
+        case 0:
 
-        break;
-    case 1:
-
-        break;
-    default:
-        DrawTextEx(windowM->fontStyle.medium, TextFormat("Halo, %s!", windowM->authUser.nama), (Vector2){300 + 1620 / 2 - MeasureTextEx(windowM->fontStyle.medium, TextFormat("Halo, %s!", windowM->authUser.nama), 80, 0).x / 2, 90}, 80, 0, SIBELAWHITE);
-        break;
-    }
+            break;
+        case 1:
+            drawJadwalMuridRead(windowM);
+            break;
+        default:
+            DrawTextEx(windowM->fontStyle.medium, TextFormat("Halo, %s!", windowM->authUser.nama), (Vector2){300 + 1620 / 2 - MeasureTextEx(windowM->fontStyle.medium, TextFormat("Halo, %s!", windowM->authUser.nama), 80, 0).x / 2, 90}, 80, 0, SIBELAWHITE);
+            break;
+        }
 }

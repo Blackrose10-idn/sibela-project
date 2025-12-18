@@ -36,6 +36,7 @@ set(PACKAGES
     views/home/pengajarHome/components/Materi/read.c
     views/home/pengajarHome/components/Materi/update.c
     views/home/muridHome/muridHome.c
+    views/home/muridHome/components/jadwal/read.c
     views/loginView.c
     views/landingView.c
     views/memberView.c

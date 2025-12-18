@@ -1,5 +1,5 @@
-#ifndef MURIDHOME_MURID_READ_H
-#define MURIDHOME_MURID_READ_H
+#ifndef MURIDHOME_JADWAL_READ_H
+#define MURIDHOME_JADWAL_READ_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,9 +9,9 @@
 #include "../../../../../model/window.h"
 #include "../../../../../libs/utils.h"
 #include "../../../../../components/header.h"
-#include "../../../../../data/murid.h"
 #include "../../../../../constants/color.h"
 
-void drawMuridRead(windowModel *windowM);
+void DrawMeetingCard(JadwalPertemuanWithDetails jadwal, Vector2 position, float width, FontStyles fonts);
+void drawJadwalMuridRead(windowModel *windowM);
 
 #endif

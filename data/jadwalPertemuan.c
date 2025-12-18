@@ -75,12 +75,26 @@ void findAllJadwalPertemuanByUserId(data *datas, int *nPage, SQLHDBC *dbConn, us
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
-    int count;
+    int count = 0;
     SQLUSMALLINT rowStatus[100];
+
+    printf("userId: %s\n", authUser.id);
 
     SQLLEN rowsFetched = 0;
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    ret = SQLExecDirect(stmt, (SQLCHAR *)"SELECT COUNT(*) AS row_count FROM jadwal_pertemuan", SQL_NTS);
+    if (strcmp(authUser.role, "PENGAJAR") == 0)
+    {
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT COUNT(*) AS row_count FROM jadwal_pertemuan WHERE id_pengajar =  ? AND waktu >= GETDATE()", SQL_NTS);
+    }
+    else if (strcmp(authUser.role, "MURID") == 0)
+    {
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT COUNT(jp.id_pertemuan) AS row_count FROM jadwal_pertemuan jp, jadwal_murid jm WHERE jp.id_pertemuan = jm.id_pertemuan AND jm.id_murid = ? AND jp.waktu >= GETDATE()", SQL_NTS);
+    }
+    printf("sebelum\n");
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(authUser.id), 0, authUser.id, 0, NULL);
+    printf("sesudah\n");
+
+    ret = SQLExecute(stmt);
     if (SQL_SUCCEEDED(ret))
     {
         if (SQL_SUCCEEDED(SQLFetch(stmt)))
@@ -89,22 +103,25 @@ void findAllJadwalPertemuanByUserId(data *datas, int *nPage, SQLHDBC *dbConn, us
         }
     }
     SQLFreeHandle(SQL_HANDLE_STMT, stmt);
-    *nPage = (int)ceil((float)count / 10);
+    *nPage = (int)ceilf((float)count / 10.0);
+    printf("count: %d\n", count);
+    printf("npage: %d\n", *nPage);
     int limit = 10;
     int offset = (datas->page - 1) * limit;
-    *nPage = (int)ceil((float)count / limit);
+    *nPage = (int)ceilf((float)count / limit);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     if (strcmp(authUser.role, "PENGAJAR") == 0)
     {
-        SQLPrepare(stmt, (SQLCHAR *)"SELECT j.id_num, j.id_pertemuan, s.nama AS nama_staff, p.nama AS nama_pengajar,r.lokasi,m.judul_materi, (SELECT COUNT(*) FROM jadwal_murid WHERE jadwal_murid.id_pertemuan = j.id_pertemuan) AS jumlah_murid,j.waktu FROM jadwal_pertemuan j, staff s, pengajar p, ruangan r, materi m WHERE j.id_staff =  ? AND s.id_staff = j.id_staff AND p.id_pengajar = j.id_pengajar AND r.id_ruangan = j.id_ruangan AND m.id_materi = j.id_materi ORDER BY j.waktu DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT j.id_num, j.id_pertemuan, s.nama AS nama_staff, p.nama AS nama_pengajar,r.lokasi,m.judul_materi, (SELECT COUNT(*) FROM jadwal_murid WHERE jadwal_murid.id_pertemuan = j.id_pertemuan) AS jumlah_murid,j.waktu FROM jadwal_pertemuan j, staff s, pengajar p, ruangan r, materi m WHERE j.id_pengajar =  ? AND s.id_staff = j.id_staff AND p.id_pengajar = j.id_pengajar AND r.id_ruangan = j.id_ruangan AND m.id_materi = j.id_materi AND j.waktu >= GETDATE() ORDER BY j.waktu DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
     }
     else if (strcmp(authUser.role, "MURID") == 0)
     {
-        SQLPrepare(stmt, (SQLCHAR *)"SELECT j.id_num, j.id_pertemuan, s.nama AS nama_staff, p.nama AS nama_pengajar,r.lokasi,m.judul_materi,j.waktu FROM jadwal_pertemuan j, staff s, pengajar p, ruangan r, materi m WHERE j.id_murid =  ? AND s.id_staff = j.id_staff AND p.id_pengajar = j.id_pengajar AND r.id_ruangan = j.id_ruangan AND m.id_materi = j.id_materi ORDER BY j.waktu DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT j.id_num, j.id_pertemuan, s.nama AS nama_staff, p.nama AS nama_pengajar,r.lokasi,m.judul_materi,j.waktu FROM jadwal_pertemuan j, staff s, pengajar p, ruangan r, materi m, jadwal_murid jm WHERE jm.id_pertemuan = j.id_pertemuan AND jm.id_murid =  ? AND s.id_staff = j.id_staff AND p.id_pengajar = j.id_pengajar AND r.id_ruangan = j.id_ruangan AND m.id_materi = j.id_materi AND j.waktu >= GETDATE() ORDER BY j.waktu DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
     }
-    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
-    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(authUser.id), 0, authUser.id, 0, NULL);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
+    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
 
     ret = SQLExecute(stmt);
     while (SQL_SUCCEEDED(ret = SQLFetch(stmt)))
@@ -116,13 +133,13 @@ void findAllJadwalPertemuanByUserId(data *datas, int *nPage, SQLHDBC *dbConn, us
         SQLGetData(stmt, 1, SQL_C_LONG,
                    &datas->jadwalPertemuans[i].id_num, sizeof(datas->jadwalPertemuans[i].id_num), NULL);
         SQLGetData(stmt, 2, SQL_C_CHAR,
-                   &datas->jadwalPertemuans[i].id_pertemuan, sizeof(datas->jadwalPertemuans[i].id_pertemuan), NULL);
+                   datas->jadwalPertemuans[i].id_pertemuan, sizeof(datas->jadwalPertemuans[i].id_pertemuan), NULL);
         SQLGetData(stmt, 3, SQL_C_CHAR,
-                   &datas->jadwalPertemuans[i].nama_staff, sizeof(datas->jadwalPertemuans[i].nama_staff), NULL);
+                   datas->jadwalPertemuans[i].nama_staff, sizeof(datas->jadwalPertemuans[i].nama_staff), NULL);
         SQLGetData(stmt, 4, SQL_C_CHAR,
                    datas->jadwalPertemuans[rowsFetched].nama_pengajar, sizeof(datas->jadwalPertemuans[rowsFetched].nama_pengajar), NULL);
-        SQLGetData(stmt, 5, SQL_C_LONG,
-                   &datas->jadwalPertemuans[rowsFetched].lokasi, sizeof(datas->jadwalPertemuans[rowsFetched].lokasi), NULL);
+        SQLGetData(stmt, 5, SQL_C_CHAR,
+                   datas->jadwalPertemuans[rowsFetched].lokasi, sizeof(datas->jadwalPertemuans[rowsFetched].lokasi), NULL);
         SQLGetData(stmt, 6, SQL_C_CHAR,
                    datas->jadwalPertemuans[rowsFetched].judul_materi, sizeof(datas->jadwalPertemuans[rowsFetched].judul_materi), NULL);
         if (strcmp(authUser.role, "PENGAJAR") == 0)
@@ -130,14 +147,17 @@ void findAllJadwalPertemuanByUserId(data *datas, int *nPage, SQLHDBC *dbConn, us
             SQLGetData(stmt, 7, SQL_C_LONG,
                        &datas->jadwalPertemuans[i].jumlah_murid, sizeof(datas->jadwalPertemuans[i].jumlah_murid), NULL);
             SQLGetData(stmt, 8, SQL_C_CHAR,
-                       &datas->jadwalPertemuans[i].waktu, sizeof(datas->jadwalPertemuans[i].waktu), NULL);
+                       datas->jadwalPertemuans[i].waktu, sizeof(datas->jadwalPertemuans[i].waktu), NULL);
         }
         else
         {
 
             SQLGetData(stmt, 7, SQL_C_CHAR,
-                       &datas->jadwalPertemuans[i].waktu, sizeof(datas->jadwalPertemuans[i].waktu), NULL);
+                       datas->jadwalPertemuans[i].waktu, sizeof(datas->jadwalPertemuans[i].waktu), NULL);
         }
+
+        printf("lokasi %s\n", datas->jadwalPertemuans[rowsFetched].lokasi);
+
         rowsFetched++;
     }
     datas->nJadwalPertemuan = rowsFetched;

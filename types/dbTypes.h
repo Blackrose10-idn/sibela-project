@@ -33,6 +33,14 @@ typedef enum
 
 typedef enum
 {
+    PROFIL,
+    JADWALMURID,
+    MATERIMURID,
+    PEMBAYARANMURID
+} MURIDSUBWINDOW;
+
+typedef enum
+{
     ABSENSI,
     PERTEMUAN,
     MATERI

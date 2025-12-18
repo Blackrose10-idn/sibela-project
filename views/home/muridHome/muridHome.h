@@ -9,8 +9,8 @@
 #include "../../../model/window.h"
 #include "../../../libs/utils.h"
 #include "../../../components/header.h"
-#include "../../../data/staf.h"
 #include "../../../constants/color.h"
+#include "components/jadwal/read.h"
 
 void drawMuridHome(windowModel *windowM);
 

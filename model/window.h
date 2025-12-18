@@ -70,12 +70,14 @@ typedef struct
     Texture2D logoRobot;
 } image;
 
+typedef void (*authFetcher)(data *datas, int *nPage, SQLHDBC *dbConn, user authUser);
 typedef void (*fetcherFunc)(data *datas, int *nPage, SQLHDBC *dbConn);
 
 typedef struct
 {
     fetcherFunc staffPage[10];
     fetcherFunc pengajarPage[10];
+    authFetcher muridPage[10];
 } fetcher;
 
 typedef struct

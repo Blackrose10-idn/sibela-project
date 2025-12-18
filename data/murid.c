@@ -215,7 +215,7 @@ QUERYSTATUS updateMurid(InputField fields[], SQLHDBC *dbConn)
     updatedMurid.tingkat = atoi(fields[5].value.text);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"UPDATE staff SET nama = ?, tanggal_lahir = ?, no_hp = ?, password = ?, tingkat = ? WHERE id_murid = ?", SQL_NTS);
+    SQLPrepare(stmt, (SQLCHAR *)"UPDATE murid SET nama = ?, tanggal_lahir = ?, no_hp = ?, password = ?, tingkat = ? WHERE id_murid = ?", SQL_NTS);
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMurid.nama), 0, updatedMurid.nama, 0, NULL);
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_DATE, strlen(updatedMurid.tanggal_lahir), 0, updatedMurid.tanggal_lahir, 0, NULL);
     SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMurid.no_hp), 0, updatedMurid.no_hp, 0, NULL);
