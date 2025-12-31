@@ -1,7 +1,13 @@
 #include "handleInput.h"
 
-void handleInput(int *ch, int *destLen, char destText[], InputType fieldType, int maxLen, mutationFunc func, InputField fields[], fetcherFunc dataFetcher, windowModel *windowM)
+void handleInput(int *ch, InputParams *params, InputType fieldType, int maxLen, mutationFunc func, InputField fields[], fetcherFunc dataFetcher, windowModel *windowM)
 {
+
+    if (params->validation.isInputInvalid)
+    {
+        params->validation.isInputInvalid = false;
+        strcpy(params->validation.errMessage, "");
+    }
 
     switch (fieldType)
     {
@@ -10,11 +16,11 @@ void handleInput(int *ch, int *destLen, char destText[], InputType fieldType, in
         *ch = GetCharPressed();
         while (*ch > 0)
         {
-            if ((*ch >= 32) && (*ch <= 125) && (*destLen < maxLen))
+            if ((*ch >= 32) && (*ch <= 125) && (params->charLen < maxLen))
             {
-                destText[*destLen] = (char)*ch;
-                destText[(*destLen) + 1] = '\0';
-                (*destLen)++;
+                params->text[params->charLen] = (char)*ch;
+                params->text[(params->charLen) + 1] = '\0';
+                (params->charLen)++;
             }
 
             *ch = GetCharPressed();
@@ -22,21 +28,21 @@ void handleInput(int *ch, int *destLen, char destText[], InputType fieldType, in
 
         if (IsKeyPressed(KEY_BACKSPACE))
         {
-            (*destLen)--;
-            if ((*destLen) < 0)
-                (*destLen) = 0;
-            destText[*destLen] = '\0';
+            (params->charLen)--;
+            if ((params->charLen) < 0)
+                (params->charLen) = 0;
+            params->text[params->charLen] = '\0';
         }
         break;
     case NUMERICINPUT:
         *ch = GetCharPressed();
         while (*ch > 0)
         {
-            if ((*ch >= '0') && (*ch <= '9') && (*destLen < maxLen))
+            if ((*ch >= '0') && (*ch <= '9') && (params->charLen < maxLen))
             {
-                destText[*destLen] = (char)*ch;
-                destText[(*destLen) + 1] = '\0';
-                (*destLen)++;
+                params->text[params->charLen] = (char)*ch;
+                params->text[(params->charLen) + 1] = '\0';
+                (params->charLen)++;
             }
 
             *ch = GetCharPressed();
@@ -44,10 +50,10 @@ void handleInput(int *ch, int *destLen, char destText[], InputType fieldType, in
 
         if (IsKeyPressed(KEY_BACKSPACE))
         {
-            (*destLen)--;
-            if ((*destLen) < 0)
-                (*destLen) = 0;
-            destText[*destLen] = '\0';
+            (params->charLen)--;
+            if ((params->charLen) < 0)
+                (params->charLen) = 0;
+            params->text[params->charLen] = '\0';
         }
         break;
     case BUTTONINPUT:

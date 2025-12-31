@@ -52,6 +52,9 @@ void drawPengajarHome(windowModel *windowM)
     {
         switch (windowM->selectedPage)
         {
+        case PERTEMUAN:
+            drawJadwalPengajarRead(windowM);
+            break;
         case MATERI:
             drawMateriCreate(windowM);
             break;

@@ -5,6 +5,8 @@
 #include "../data/staf.h"
 #include "../data/murid.h"
 #include "../data/pengajar.h"
+#include <string.h>
+#include <ctype.h>
 
 void loginFunction(windowModel *windowM);
 void logoutFunction(windowModel *windowM);

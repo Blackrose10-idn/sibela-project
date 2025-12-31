@@ -40,7 +40,7 @@ void updateView(windowModel *windowM)
         switch (ch)
         {
         case KEY_UP:
-            if (windowM->curPos > 1)
+            if ((windowM->curPos > 1 && (windowM->activeSubWindow == CREATE || windowM->activeSubWindow == UPDATE)) || (windowM->curPos > 0 && windowM->activeSubWindow == READ))
                 windowM->curPos -= 1;
             break;
         case KEY_DOWN:
@@ -127,11 +127,11 @@ void updateView(windowModel *windowM)
                         switch (windowM->activeSubWindow)
                         {
                         case UPDATE:
-                            handleInput(&ch, &windowM->forms.staffPage[selectedPage].fields[curPos].value.charLen, windowM->forms.staffPage[selectedPage].fields[curPos].value.text, windowM->forms.staffPage[selectedPage].fields[curPos].type, 100, windowM->forms.staffPage[selectedPage].updateFunction, windowM->forms.staffPage[selectedPage].fields, windowM->dataFetchers.staffPage[selectedPage], windowM);
+                            handleInput(&ch, &windowM->forms.staffPage[selectedPage].fields[curPos].value, windowM->forms.staffPage[selectedPage].fields[curPos].type, 100, windowM->forms.staffPage[selectedPage].updateFunction, windowM->forms.staffPage[selectedPage].fields, windowM->dataFetchers.staffPage[selectedPage], windowM);
                             break;
 
                         case CREATE:
-                            handleInput(&ch, &windowM->forms.staffPage[selectedPage].fields[curPos].value.charLen, windowM->forms.staffPage[selectedPage].fields[curPos].value.text, windowM->forms.staffPage[selectedPage].fields[curPos].type, 100, windowM->forms.staffPage[selectedPage].createFunc, windowM->forms.staffPage[selectedPage].fields, windowM->dataFetchers.staffPage[selectedPage], windowM);
+                            handleInput(&ch, &windowM->forms.staffPage[selectedPage].fields[curPos].value, windowM->forms.staffPage[selectedPage].fields[curPos].type, 100, windowM->forms.staffPage[selectedPage].createFunc, windowM->forms.staffPage[selectedPage].fields, windowM->dataFetchers.staffPage[selectedPage], windowM);
                             break;
                         }
                     }
@@ -143,8 +143,11 @@ void updateView(windowModel *windowM)
                 switch (ch)
                 {
                 case KEY_N:
-                    strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[1].value.text, windowM->authUser.id);
-                    windowM->forms.staffPage[windowM->selectedPage].fields[1].value.charLen = strlen(windowM->authUser.id);
+                    if (windowM->selectedPage == JADWAL)
+                    {
+                        strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[1].value.text, windowM->authUser.id);
+                        windowM->forms.staffPage[windowM->selectedPage].fields[1].value.charLen = strlen(windowM->authUser.id);
+                    }
                     windowM->activeSubWindow = CREATE;
                     windowM->page = 1;
                     for (int i = 0; i < 6; i++)
@@ -209,10 +212,10 @@ void updateView(windowModel *windowM)
                         copySelectData(windowM->focusedData.jadwal.judul_materi, windowM->focusedData.jadwal.id_materi, &windowM->selectByPage.staffPage[JADWAL][4].selected);
                         copyStringData(windowM->focusedData.jadwal.waktu, &windowM->forms.staffPage[JADWAL].fields[5].value);
                         findAllSelectedSiswaByPertemuanID(windowM->focusedData.jadwal.id_pertemuan, &windowM->selectByPage.staffPage[JADWAL][6], windowM->dbConn);
+                        strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[1].value.text, windowM->authUser.id);
+                        windowM->forms.staffPage[windowM->selectedPage].fields[1].value.charLen = strlen(windowM->authUser.id);
                         break;
                     }
-                    strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[1].value.text, windowM->authUser.id);
-                    windowM->forms.staffPage[windowM->selectedPage].fields[1].value.charLen = strlen(windowM->authUser.id);
                     windowM->activeSubWindow = UPDATE;
                     windowM->page = 1;
                     windowM->curPos = 1;
@@ -315,10 +318,10 @@ void updateView(windowModel *windowM)
                     switch (windowM->activeSubWindow)
                     {
                     case UPDATE:
-                        handleInput(&ch, &windowM->forms.pengajarPage[selectedPage].fields[curPos].value.charLen, windowM->forms.pengajarPage[selectedPage].fields[curPos].value.text, windowM->forms.pengajarPage[selectedPage].fields[curPos].type, 100, windowM->forms.pengajarPage[selectedPage].updateFunction, windowM->forms.pengajarPage[selectedPage].fields, windowM->dataFetchers.pengajarPage[selectedPage], windowM);
+                        handleInput(&ch, &windowM->forms.pengajarPage[selectedPage].fields[curPos].value, windowM->forms.pengajarPage[selectedPage].fields[curPos].type, 100, windowM->forms.pengajarPage[selectedPage].updateFunction, windowM->forms.pengajarPage[selectedPage].fields, windowM->dataFetchers.pengajarPage[selectedPage], windowM);
                         break;
                     case CREATE:
-                        handleInput(&ch, &windowM->forms.pengajarPage[selectedPage].fields[curPos].value.charLen, windowM->forms.pengajarPage[selectedPage].fields[curPos].value.text, windowM->forms.pengajarPage[selectedPage].fields[curPos].type, 100, windowM->forms.pengajarPage[selectedPage].createFunc, windowM->forms.pengajarPage[selectedPage].fields, windowM->dataFetchers.pengajarPage[selectedPage], windowM);
+                        handleInput(&ch, &windowM->forms.pengajarPage[selectedPage].fields[curPos].value, windowM->forms.pengajarPage[selectedPage].fields[curPos].type, 100, windowM->forms.pengajarPage[selectedPage].createFunc, windowM->forms.pengajarPage[selectedPage].fields, windowM->dataFetchers.pengajarPage[selectedPage], windowM);
                         break;
                     }
                 }
@@ -501,10 +504,10 @@ void updateView(windowModel *windowM)
             switch (windowM->loginData.activeInput)
             {
             case 0:
-                handleInput(&ch, &windowM->loginData.email.charLen, windowM->loginData.email.text, TEXTINPUT, 100, NULL, NULL, NULL, windowM);
+                handleInput(&ch, &windowM->loginData.email, TEXTINPUT, 100, NULL, NULL, NULL, windowM);
                 break;
             case 1:
-                handleInput(&ch, &windowM->loginData.password.charLen, windowM->loginData.password.text, TEXTINPUT, 100, NULL, NULL, NULL, windowM);
+                handleInput(&ch, &windowM->loginData.password, TEXTINPUT, 100, NULL, NULL, NULL, windowM);
                 break;
             case 2:
                 switch (ch)
@@ -536,10 +539,10 @@ void updateView(windowModel *windowM)
             switch (windowM->loginData.activeInput)
             {
             case 0:
-                handleInput(&ch, &windowM->loginData.phoneNumber.charLen, windowM->loginData.phoneNumber.text, NUMERICINPUT, 15, NULL, NULL, NULL, windowM);
+                handleInput(&ch, &windowM->loginData.phoneNumber, NUMERICINPUT, 15, NULL, NULL, NULL, windowM);
                 break;
             case 1:
-                handleInput(&ch, &windowM->loginData.password.charLen, windowM->loginData.password.text, TEXTINPUT, 100, NULL, NULL, NULL, windowM);
+                handleInput(&ch, &windowM->loginData.password, TEXTINPUT, 100, NULL, NULL, NULL, windowM);
                 break;
             case 2:
                 switch (ch)

@@ -8,6 +8,7 @@ set(PACKAGES
     components/header.c
     libs/login.c
     libs/handleInput.c
+    libs/validator.c
     model/model.c
     model/windows.c
     update/update.c
@@ -34,6 +35,7 @@ set(PACKAGES
     views/home/pengajarHome/pengajarHome.c
     views/home/pengajarHome/components/Materi/create.c
     views/home/pengajarHome/components/Materi/read.c
+    views/home/pengajarHome/components/jadwal/read.c
     views/home/pengajarHome/components/Materi/update.c
     views/home/muridHome/muridHome.c
     views/home/muridHome/components/jadwal/read.c

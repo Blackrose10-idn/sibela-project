@@ -25,10 +25,22 @@ void drawStaffLogin(windowModel *windowM)
         67,
     };
     DrawTextEx(windowM->fontStyle.medium, "Email", (Vector2){(int)textBox.x, (int)textBox.y - 44}, 40, 0, SIBELAWHITE);
-    DrawRectangleRoundedLines(textBox, 0.3, 0, windowM->loginData.activeInput == 0 ? PRIMARY : SIBELAWHITE);
+    DrawRectangleRoundedLines(textBox, 0.3, 0, windowM->loginData.email.validation.isInputInvalid ? RED : windowM->loginData.activeInput == 0 ? PRIMARY
+                                                                                                                                              : SIBELAWHITE);
+
+    if (windowM->loginData.email.validation.isInputInvalid)
+    {
+        DrawTextEx(windowM->fontStyle.regular, windowM->loginData.email.validation.errMessage, (Vector2){(int)textBox.x + 5, (int)textBox.y + 70}, 20, 0, RED);
+    }
     DrawTextEx(windowM->fontStyle.regular, windowM->loginData.email.text, (Vector2){(int)textBox.x + 5, (int)textBox.y + 8}, 40, 0, SIBELAWHITE);
+
     DrawTextEx(windowM->fontStyle.medium, "Password", (Vector2){(int)textBoxPass.x, (int)textBoxPass.y - 44}, 40, 0, SIBELAWHITE);
-    DrawRectangleRoundedLines(textBoxPass, 0.3, 0, windowM->loginData.activeInput == 1 ? PRIMARY : SIBELAWHITE);
+    DrawRectangleRoundedLines(textBoxPass, 0.3, 0, windowM->loginData.password.validation.isInputInvalid ? RED : windowM->loginData.activeInput == 1 ? PRIMARY
+                                                                                                                                                     : SIBELAWHITE);
+    if (windowM->loginData.password.validation.isInputInvalid)
+    {
+        DrawTextEx(windowM->fontStyle.regular, windowM->loginData.password.validation.errMessage, (Vector2){(int)textBoxPass.x + 5, (int)textBoxPass.y + 70}, 20, 0, RED);
+    }
     // DrawTextEx(windowM->fontStyle.regular, windowM->loginData.password.text, (Vector2){(int)textBoxPass.x + 5, (int)textBoxPass.y + 8}, 40, 0, SIBELAWHITE);
     for (int i = 0; i < windowM->loginData.password.charLen; i++)
     {

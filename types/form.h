@@ -2,6 +2,13 @@
 #define FORMTYPES
 
 #include "../model/model.h"
+#include <stdbool.h>
+
+typedef struct
+{
+    bool isInputInvalid;
+    char errMessage[50];
+} InputValidation;
 
 typedef struct
 {
@@ -9,6 +16,7 @@ typedef struct
     char multiValue[50][8];
     int charLen;
     int selected;
+    InputValidation validation;
 } InputParams;
 
 typedef enum

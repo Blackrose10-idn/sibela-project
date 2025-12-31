@@ -6,6 +6,30 @@ void loginFunction(windowModel *windowM)
     switch (windowM->currWindow)
     {
     case LOGINSTAFF:
+        char email[100];
+        char pass[100];
+        strcpy(email, windowM->loginData.email.text);
+        strcpy(email, windowM->loginData.password.text);
+        bool invalid = false;
+
+        if (strcspn(email, "@") == strlen(email) || strcspn(email, ".") == strlen(email))
+        {
+            windowM->loginData.email.validation.isInputInvalid = true;
+            strcpy(windowM->loginData.email.validation.errMessage, "Invalid Email!");
+
+            invalid = true;
+        }
+        if (strlen(pass) <= 5)
+        {
+            windowM->loginData.password.validation.isInputInvalid = true;
+            strcpy(windowM->loginData.password.validation.errMessage, "Password too short!");
+
+            invalid = true;
+        }
+
+        if (invalid)
+            return;
+
         Staf loginStaf = findStafbyEmail(windowM->loginData.email.text, windowM->dbConn);
 
         if (loginStaf.id_num == -1)

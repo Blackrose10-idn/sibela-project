@@ -12,6 +12,7 @@
 #include "../../../data/staf.h"
 #include "../../../constants/color.h"
 #include "components/Materi/create.h"
+#include "components/jadwal/read.h"
 #include "components/Materi/read.h"
 #include "components/Materi/update.h"
 

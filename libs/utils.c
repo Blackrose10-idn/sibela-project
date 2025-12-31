@@ -71,6 +71,11 @@ void clearFields(InputField fields[])
     {
         fields[i].value.charLen = 0;
         strcpy(fields[i].value.text, "");
+        fields[i].value.selected = -1;
+        for (int j = 0; i < 8; i++)
+        {
+            strcpy(fields[i].value.multiValue[j], "\0");
+        }
     }
 }
 
