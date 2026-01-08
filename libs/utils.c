@@ -79,6 +79,14 @@ void clearFields(InputField fields[])
     }
 }
 
+void clearSelects(Select (*fields)[])
+{
+    for (int i = 0; i < 6; i++)
+    {
+        (*fields)[i] = (Select){};
+    }
+}
+
 int isOptionInMultiSelected(SelectProp target, SelectProp domain[], int nDomain)
 {
     for (int i = 0; i < nDomain; i++)
@@ -88,4 +96,29 @@ int isOptionInMultiSelected(SelectProp target, SelectProp domain[], int nDomain)
     }
 
     return 0;
+}
+
+int findIdxByTargetProp(SelectProp target, SelectProp domain[], int nDomain)
+{
+    for (int i = 0; i < nDomain; i++)
+    {
+        if (strcmp(domain[i].value, target.value) == 0)
+            return i;
+    }
+
+    return -1;
+}
+
+void popMultiSelectArray(SelectProp target, SelectProp domain[], int *nDomain)
+{
+    int idx = findIdxByTargetProp(target, domain, *nDomain);
+    if (idx == -1)
+        return;
+    *nDomain -= 1;
+    for (int i = idx; i < *nDomain; i++)
+    {
+        domain[i] = domain[i + 1];
+        printf("i:%d\n", i);
+    }
+    domain[*nDomain] = (SelectProp){};
 }

@@ -63,6 +63,17 @@ void drawJadwalCreate(windowModel *windowM)
             else
                 DrawRectangleRoundedLines(buttonBox, 0.3, 0, SIBELAWHITE);
             DrawTextEx(windowM->fontStyle.medium, "PILIH", (Vector2){(int)buttonBox.x + buttonBox.width / 2 - MeasureTextEx(windowM->fontStyle.medium, "PILIH", 40, 0).x / 2, (int)buttonBox.y + MeasureTextEx(windowM->fontStyle.medium, "PILIH", 40, 0).y / 2 - 8}, 40, 0, SIBELAWHITE);
+            switch (windowM->forms.staffPage[windowM->selectedPage].fields[i].type)
+            {
+            case CUSTOMMODAL:
+                if (!TextIsEqual(windowM->selectByPage.staffPage[windowM->selectedPage][i].selected.value, ""))
+                    DrawTextEx(windowM->fontStyle.regular, TextFormat("Tepilih: %s", windowM->selectByPage.staffPage[windowM->selectedPage][i].selected.label), (Vector2){(int)buttonBox.x + buttonBox.width + 20, (int)buttonBox.y + MeasureTextEx(windowM->fontStyle.regular, "PILIH", 32, 0).y / 2}, 32, 0, SIBELAWHITE);
+                break;
+            case CUSTOMMODALMULTI:
+                if (windowM->selectByPage.staffPage[windowM->selectedPage][i].nMultiSelected >= 0)
+                    DrawTextEx(windowM->fontStyle.regular, TextFormat("Tepilih: %d", windowM->selectByPage.staffPage[windowM->selectedPage][i].nMultiSelected), (Vector2){(int)buttonBox.x + buttonBox.width + 20, (int)buttonBox.y + MeasureTextEx(windowM->fontStyle.regular, "PILIH", 32, 0).y / 2}, 32, 0, SIBELAWHITE);
+                break;
+            }
             break;
         }
     }
