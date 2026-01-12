@@ -13,6 +13,7 @@
 #include "../data/materi.h"
 #include "../data/jadwalPertemuan.h"
 #include "../data/pembayaran.h"
+#include "../data/absensi.h"
 #define MAX_LEGEND 10
 
 typedef enum
@@ -34,6 +35,12 @@ typedef enum
     CREATE,
     UPDATE,
 } SUBWINDOW;
+
+typedef enum
+{
+    MAIN,
+    PRESENSI
+} ABSENSISUBWINDOW;
 
 typedef struct
 {
@@ -129,17 +136,22 @@ typedef struct
 typedef struct
 {
     JadwalPertemuanWithDetails selectedJadwal;
+    ABSENSISUBWINDOW activeSubWindow;
+    void (*getMurids)(data *datas, int *nPage, SQLHDBC *dbConn, JadwalPertemuanWithDetails *jadwal);
+    QUERYSTATUS (*submitFunc)(MuridAbsensi murids[], int nMurid, char id_pert[], SQLHDBC *dbConn, user authUser);
 } AbsensiPageStates;
 
 typedef struct
 {
     AbsensiPageStates absensiPage;
+
 } PengajarHomeStates;
 
 typedef struct
 {
     SelectByPage selectByPage;
     WINDOWS currWindow;
+    Vector2 mousePosition;
     int shouldClose;
     int curPos;
     int isModalShown;

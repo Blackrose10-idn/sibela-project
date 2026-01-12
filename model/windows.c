@@ -1,4 +1,6 @@
 #include "window.h"
+#define RAYGUI_IMPLEMENTATION
+#include "../libs/headers/raygui.h"
 
 void initForm(windowModel *windowM)
 {
@@ -91,6 +93,9 @@ void initForm(windowModel *windowM)
 
     windowM->dataFetchers.pengajarPage[ABSENSI] = findAllJadwalPertemuanByUserId;
     windowM->dataFetchers.pengajarPage[PERTEMUAN] = findAllJadwalPertemuanByUserId;
+    windowM->pengajarHomeState.absensiPage.activeSubWindow = MAIN;
+    windowM->pengajarHomeState.absensiPage.getMurids = getMuridsbyJadwalPertemuan;
+    windowM->pengajarHomeState.absensiPage.submitFunc = createAbsensi;
 }
 
 void initAssets(windowModel *windowM)
@@ -114,6 +119,7 @@ void initAssets(windowModel *windowM)
     windowM->fontStyle.medium = LoadFontEx("assets/fonts/Poppins-Medium.ttf", 224, 0, 250);
     windowM->fontStyle.regular = LoadFontEx("assets/fonts/Poppins-Regular.ttf", 224, 0, 250);
     windowM->fontStyle.mediumItalic = LoadFontEx("assets/fonts/Poppins-MediumItalic.ttf", 224, 0, 250);
+    GuiSetFont(windowM->fontStyle.regular);
 }
 
 void initWindow(windowModel *windowM)

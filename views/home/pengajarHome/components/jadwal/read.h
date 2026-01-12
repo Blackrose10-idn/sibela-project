@@ -11,7 +11,7 @@
 #include "../../../../../components/header.h"
 #include "../../../../../constants/color.h"
 
-void DrawMeetingPengajarCard(JadwalPertemuanWithDetails jadwal, Vector2 position, float width, FontStyles fonts);
+void DrawMeetingPengajarCard(JadwalPertemuanWithDetails jadwal, Vector2 position, float width, FontStyles fonts, int selected);
 void drawJadwalPengajarRead(windowModel *windowM);
 
 #endif

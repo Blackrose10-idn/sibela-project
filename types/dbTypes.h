@@ -168,6 +168,28 @@ typedef struct
     char mtd_pembayaran[20];
 } PembayaranFetchAll;
 
+typedef struct
+{
+    char id_murid[7];
+    char nama_murid[100];
+    char alasan[100];
+    int charLenAlasan;
+    int isHadir;
+    char waktu_absensi[30];
+} MuridAbsensi;
+
+typedef struct
+{
+    int id_num;
+    char id_absensi[7];
+    char id_murid[7];
+    char id_pertemuan[8];
+    char id_pengajar[8];
+    int isHadir;
+    char alasan[201];
+    char waktu_absensi[20];
+} Absensi;
+
 // typedef struct
 //     {
 //         SQLINTEGER id_num;

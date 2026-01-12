@@ -18,7 +18,7 @@ void drawJadwalPengajarRead(windowModel *windowM)
 
     for (int row = 0; row < windowM->datas.nJadwalPertemuan; row++)
     {
-        DrawMeetingPengajarCard(windowM->datas.jadwalPertemuans[row], (Vector2){start_x - 400, start_y + row * 200}, 800, windowM->fontStyle);
+        DrawMeetingPengajarCard(windowM->datas.jadwalPertemuans[row], (Vector2){start_x - 400, start_y + row * 200}, 800, windowM->fontStyle, 0);
     }
     DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->datas.page, windowM->datas.totalPages),
                (Vector2){300 + (1620 / 2 - 50),
@@ -27,7 +27,7 @@ void drawJadwalPengajarRead(windowModel *windowM)
                SIBELAWHITE);
 }
 
-void DrawMeetingPengajarCard(JadwalPertemuanWithDetails jadwal, Vector2 position, float width, FontStyles fonts)
+void DrawMeetingPengajarCard(JadwalPertemuanWithDetails jadwal, Vector2 position, float width, FontStyles fonts, int selected)
 {
     float height = 160.0f;
     float padding = 25.0f;
@@ -37,7 +37,7 @@ void DrawMeetingPengajarCard(JadwalPertemuanWithDetails jadwal, Vector2 position
 
     DrawRectangleRounded((Rectangle){cardBounds.x + 2, cardBounds.y + 4, cardBounds.width, cardBounds.height}, cornerRoundness, 10, Fade(BLACK, 0.1f));
 
-    DrawRectangleRounded(cardBounds, cornerRoundness, 10, SIBELAWHITE);
+    DrawRectangleRounded(cardBounds, cornerRoundness, 10, selected ? GREEN : SIBELAWHITE);
 
     Rectangle accentBar = {cardBounds.x, cardBounds.y + 20, 5, 40};
     DrawRectangleRec(accentBar, PRIMARY);

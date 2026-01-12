@@ -1,5 +1,4 @@
 #include "read.h"
-#define RAYGUI_IMPLEMENTATION
 #include "../../../../../libs/headers/raygui.h"
 
 void drawStaffRead(windowModel *windowM)

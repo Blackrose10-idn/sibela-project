@@ -31,6 +31,8 @@ typedef struct
     SQLSMALLINT nJadwalPertemuan;
     PembayaranFetchAll pembayarans[100];
     SQLSMALLINT nPembayaran;
+    MuridAbsensi muridAbsensis[100];
+    SQLSMALLINT nMuridAbsensi;
 
     int page;
     int totalPages;

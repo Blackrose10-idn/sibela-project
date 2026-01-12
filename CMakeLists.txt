@@ -51,6 +51,7 @@ set(PACKAGES
     data/mapel.c
     data/pengajar.c
     data/materi.c
+    data/absensi.c
     data/pembayaran.c
     data/jadwalPertemuan.c
     data/jadwalMurid.c

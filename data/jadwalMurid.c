@@ -21,7 +21,6 @@ QUERYSTATUS createJadwalMurid(InputParams input, char id_pert[], SQLHDBC *dbConn
     for (int i = 0; i < input.charLen; i++)
     {
         strcpy(newJamur.id_murid, input.multiValue[i]);
-        printf("Murid %d: %s\n", i + 1, newJamur.id_murid);
         SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO jadwal_murid (id_pertemuan, id_murid) VALUES (?,?)", SQL_NTS);
         SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newJamur.id_pertemuan), 0, newJamur.id_pertemuan, 0, NULL);
         SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newJamur.id_murid), 0, newJamur.id_murid, 0, NULL);

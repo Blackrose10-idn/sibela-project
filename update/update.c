@@ -2,6 +2,7 @@
 
 void updateView(windowModel *windowM)
 {
+    windowM->mousePosition = GetMousePosition();
     if (windowM->isLoading)
     {
         windowM->loadingTime += GetFrameTime();
@@ -338,7 +339,7 @@ void updateView(windowModel *windowM)
                 break;
             }
         }
-        if (!windowM->cursorEnabled && windowM->activeSubWindow == READ)
+        else if (!windowM->cursorEnabled && windowM->activeSubWindow == READ)
         {
             switch (ch)
             {
@@ -348,20 +349,6 @@ void updateView(windowModel *windowM)
             case KEY_DOWN:
                 windowM->curPos += 1;
                 break;
-            case KEY_TAB:
-
-                windowM->cursorEnabled = 1;
-                windowM->selectedPage = -1;
-
-                windowM->activeSubWindow = READ;
-                windowM->curPos = 0;
-                break;
-            case KEY_N:
-                // windowM->forms.pengajarPage[windowM->selectedPage].optionFetcher[1](&windowM->forms.staffPage[windowM->selectedPage].se)
-                windowM->activeSubWindow = CREATE;
-                windowM->page = 1;
-                windowM->curPos = 1;
-                break;
             case KEY_RIGHT:
                 if (windowM->datas.page < windowM->datas.totalPages)
                 {
@@ -370,31 +357,46 @@ void updateView(windowModel *windowM)
                     windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
                 }
                 break;
-            case KEY_D:
-                windowM->isModalShown = 1;
-                break;
-            case KEY_U:
-                switch (windowM->selectedPage)
-                {
-                case MATERI:
-                    copyStringData(windowM->focusedData.materi.id_materi, &windowM->forms.pengajarPage[2].fields[0].value);
-                    copyStringData(windowM->focusedData.materi.id_mapel, &windowM->forms.pengajarPage[2].fields[1].value);
-                    strcpy(windowM->selectByPage.pengajarPage[windowM->selectedPage].selected.value, windowM->focusedData.materi.id_mapel);
-                    strcpy(windowM->selectByPage.pengajarPage[windowM->selectedPage].selected.label, windowM->focusedData.materi.nama_mapel);
-                    copyStringData(windowM->focusedData.materi.judul_materi, &windowM->forms.pengajarPage[2].fields[2].value);
-                    copyStringData(windowM->focusedData.materi.isi_materi, &windowM->forms.pengajarPage[2].fields[3].value);
-                    break;
-                }
-                windowM->activeSubWindow = UPDATE;
-                windowM->page = 1;
-                windowM->curPos = 1;
-                break;
             case KEY_LEFT:
                 if (windowM->datas.page > 1)
                 {
                     windowM->datas.page--;
                     windowM->curPos = 0;
                     windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
+                }
+                break;
+            default:
+                if (windowM->activeSubWindow == ABSENSI)
+                {
+                    switch (windowM->pengajarHomeState.absensiPage.activeSubWindow)
+                    {
+                    case MAIN:
+                        switch (ch)
+                        {
+                        case KEY_ENTER:
+                            windowM->curPos = 0;
+                            windowM->pengajarHomeState.absensiPage.getMurids(&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, &windowM->focusedData.jadwal);
+                            windowM->pengajarHomeState.absensiPage.activeSubWindow = PRESENSI;
+                            break;
+                        case KEY_TAB:
+                            windowM->curPos = 0;
+                            windowM->cursorEnabled = 1;
+                            windowM->activeSubWindow = -1;
+                            break;
+                        }
+                        break;
+                    case PRESENSI:
+                        switch (ch)
+                        {
+                        case KEY_TAB:
+                            windowM->pengajarHomeState.absensiPage.activeSubWindow = MAIN;
+                            break;
+                        case KEY_ENTER:
+                            windowM->datas.muridAbsensis[windowM->curPos].isHadir = !windowM->datas.muridAbsensis[windowM->curPos].isHadir;
+                            break;
+                        }
+                        break;
+                    }
                 }
                 break;
             }
@@ -408,7 +410,7 @@ void updateView(windowModel *windowM)
         //         break;
         //     }
         // }
-        if (windowM->cursorEnabled)
+        else if (windowM->cursorEnabled)
         {
             switch (ch)
             {
