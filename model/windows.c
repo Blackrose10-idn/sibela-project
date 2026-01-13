@@ -108,7 +108,7 @@ void initAssets(windowModel *windowM)
     windowM->members[4].image = LoadTexture("assets/images/member/nabilah.png");
 
     // Logo Sibela
-    windowM->images.logo = LoadTexture("assets/images/sibela_Versi2.png");
+    windowM->images.logo = LoadTexture("assets/images/Logo_SIBELA_New.png");
     // Logo Robot Sibela
     windowM->images.logoRobot = LoadTexture("assets/images/Robot_Sibela.png");
 
