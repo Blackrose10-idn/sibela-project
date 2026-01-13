@@ -44,11 +44,7 @@ void drawStaffRead(windowModel *windowM)
                          start_y - cell_height + padding},
                font_size, 0,
                SIBELAWHITE);
-    // DrawTextEx(windowM->fontStyle.regular, "Password",
-    //            (Vector2){start_x + 4 * cell_width + padding,
-    //                      start_y - cell_height + padding},
-    //            font_size, 0,
-    //            SIBELAWHITE);
+
     for (int row = 0; row < windowM->datas.nStaf; row++)
     {
         for (int col = 0; col < 4; col++)
@@ -85,11 +81,7 @@ void drawStaffRead(windowModel *windowM)
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);
-        // DrawTextEx(windowM->fontStyle.regular, windowM->datas.staffs[row].password,
-        //            (Vector2){start_x + 4 * cell_width + padding,
-        //                      start_y + row * cell_height + padding},
-        //            font_size, 0,
-        //            SIBELAWHITE);
+
     }
     DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->datas.page, windowM->datas.totalPages),
                (Vector2){300 + (1620 / 2 - 30),
