@@ -47,7 +47,8 @@ void DrawLegend(windowModel *windowM)
         {
             drawItem(x, y + gap * row++, "Atas/Bawah", "Navigasi", font);
             drawItem(x, y + gap * row++, "Enter", "Submit", font);
-            drawItem(x, y + gap * row++, "Esc", "Batal", font);
+            drawItem(x, y + gap * row++, "Tab", "Batal", font);
+            drawItem(x, y + gap * row++, "Esc", "Keluar Aplikasi", font);
             return;
         }
 
@@ -55,7 +56,8 @@ void DrawLegend(windowModel *windowM)
         {
             drawItem(x, y + gap * row++, "Atas/Bawah", "Navigasi", font);
             drawItem(x, y + gap * row++, "Enter", "Submit", font);
-            drawItem(x, y + gap * row++, "Esc", "Batal", font);
+            drawItem(x, y + gap * row++, "Tab", "Batal", font);
+            drawItem(x, y + gap * row++, "Esc", "Keluar Aplikasi", font);
             return;
         }
         break;
