@@ -17,7 +17,7 @@ void DrawLegend(windowModel *windowM)
     Font font = windowM->fontStyle.medium;
 
     DrawRectangleRounded(
-        (Rectangle){x - 20, y - 20, 360, 200},
+        (Rectangle){x - 20, y - 20, 360, 230},
         0.15f,
         8,
         Fade(BLACK, 0.55f));
@@ -34,10 +34,21 @@ void DrawLegend(windowModel *windowM)
 
         if (windowM->activeSubWindow == READ)
         {
+            switch (windowM->selectedPage){
+            case PEMBAYARAN:
+            drawItem(x, y + gap * row++, "Atas/Bawah", "Navigasi Data", font);
+            drawItem(x, y + gap * row++, "N", "Tambah Data", font);
+            drawItem(x, y + gap * row++, "Enter", "Pilih", font);
+            drawItem(x, y + gap * row++, "Tab", "Kembali", font);
+            drawItem(x, y + gap * row++, "Esc", "Keluar Aplikasi", font);
+            break;
+            }
+            
             drawItem(x, y + gap * row++, "Atas/Bawah", "Navigasi Data", font);
             drawItem(x, y + gap * row++, "N", "Tambah Data", font);
             drawItem(x, y + gap * row++, "U", "Ubah Data", font);
             drawItem(x, y + gap * row++, "D", "Hapus Data", font);
+            drawItem(x, y + gap * row++, "Enter", "Pilih", font);
             drawItem(x, y + gap * row++, "Tab", "Kembali", font);
             drawItem(x, y + gap * row++, "Esc", "Keluar Aplikasi", font);
             return;
@@ -46,16 +57,52 @@ void DrawLegend(windowModel *windowM)
         if (windowM->activeSubWindow == CREATE)
         {
             drawItem(x, y + gap * row++, "Atas/Bawah", "Navigasi", font);
-            drawItem(x, y + gap * row++, "Enter", "Submit", font);
+            drawItem(x, y + gap * row++, "Enter", "Simpan", font);
             drawItem(x, y + gap * row++, "Tab", "Batal", font);
             drawItem(x, y + gap * row++, "Esc", "Keluar Aplikasi", font);
             return;
         }
-
+        
         if (windowM->activeSubWindow == UPDATE)
         {
             drawItem(x, y + gap * row++, "Atas/Bawah", "Navigasi", font);
-            drawItem(x, y + gap * row++, "Enter", "Submit", font);
+            drawItem(x, y + gap * row++, "Enter", "Simpan", font);
+            drawItem(x, y + gap * row++, "Tab", "Batal", font);
+            drawItem(x, y + gap * row++, "Esc", "Keluar Aplikasi", font);
+            return;
+        }
+        break;
+        case PENGAJARHOME:
+        if (windowM->activeSubWindow == CREATE)
+        {
+            drawItem(x, y + gap * row++, "Atas/Bawah", "Navigasi", font);
+            drawItem(x, y + gap * row++, "Enter", "Simpan", font);
+            drawItem(x, y + gap * row++, "Tab", "Batal", font);
+            drawItem(x, y + gap * row++, "Esc", "Keluar Aplikasi", font);
+            return;
+        }
+        if (windowM->activeSubWindow == READ)
+        {
+            switch (windowM->selectedPage){
+            case MATERI:
+            drawItem(x, y + gap * row++, "Atas/Bawah", "Navigasi Data", font);
+            drawItem(x, y + gap * row++, "N", "Tambah Data", font);
+            drawItem(x, y + gap * row++, "U", "Ubah Data", font);
+            drawItem(x, y + gap * row++, "D", "Hapus Data", font);
+            drawItem(x, y + gap * row++, "Enter", "Pilih", font);
+            drawItem(x, y + gap * row++, "Tab", "Kembali", font);
+            drawItem(x, y + gap * row++, "Esc", "Keluar Aplikasi", font);
+            break;
+            }
+            drawItem(x, y + gap * row++, "Atas/Bawah", "Navigasi Data", font);
+            drawItem(x, y + gap * row++, "Tab", "Kembali", font);
+            drawItem(x, y + gap * row++, "Esc", "Keluar Aplikasi", font);
+            return;
+        }
+        if (windowM->activeSubWindow == UPDATE)
+        {
+            drawItem(x, y + gap * row++, "Atas/Bawah", "Navigasi", font);
+            drawItem(x, y + gap * row++, "Enter", "Simpan", font);
             drawItem(x, y + gap * row++, "Tab", "Batal", font);
             drawItem(x, y + gap * row++, "Esc", "Keluar Aplikasi", font);
             return;
