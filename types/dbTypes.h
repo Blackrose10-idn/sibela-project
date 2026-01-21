@@ -22,7 +22,6 @@ typedef enum
 
 typedef enum
 {
-    STAFF,
     MURID,
     PENGAJAR,
     RUANGAN,

@@ -11,7 +11,6 @@ void drawInputBox(windowModel *windowM,
                   int posIndex,
                   int isSecret)
 {
-
     if (isSecret && !eyeLoaded)
     {
         eyeOpen = LoadTexture("assets/images/BUKA.png");

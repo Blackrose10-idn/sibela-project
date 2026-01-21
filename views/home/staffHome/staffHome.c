@@ -88,7 +88,6 @@ void drawStaffHome(windowModel *windowM)
     else
     {
         Menus opsi[] = {
-            (Menus){"Staff", 0},
             (Menus){"Murid", 0},
             (Menus){"Pengajar", 0},
             (Menus){"Ruangan", 0},
@@ -122,10 +121,6 @@ void drawStaffHome(windowModel *windowM)
         {
             switch (windowM->selectedPage)
             {
-            case STAFF:
-                drawStaffRead(windowM);
-                DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
-                break;
             case MURID:
                 drawMuridRead(windowM);
                 DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
@@ -159,9 +154,6 @@ void drawStaffHome(windowModel *windowM)
         {
             switch (windowM->selectedPage)
             {
-            case STAFF:
-                drawStaffCreate(windowM);
-                break;
             case MURID:
                 drawMuridCreate(windowM);
                 break;
@@ -187,9 +179,6 @@ void drawStaffHome(windowModel *windowM)
         {
             switch (windowM->selectedPage)
             {
-            case STAFF:
-                drawStaffUpdate(windowM);
-                break;
             case MURID:
                 drawMuridUpdate(windowM);
                 break;

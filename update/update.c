@@ -187,22 +187,14 @@ void updateView(windowModel *windowM)
                 case KEY_U:
                     switch (windowM->selectedPage)
                     {
-                    case STAFF:
-                        copyStringData(windowM->focusedData.staff.id_staff, &windowM->forms.staffPage[STAFF].fields[0].value);
-                        copyStringData(windowM->focusedData.staff.nama, &windowM->forms.staffPage[STAFF].fields[1].value);
-                        copyStringData(windowM->focusedData.staff.tanggal_lahir, &windowM->forms.staffPage[STAFF].fields[2].value);
-                        copyStringData(windowM->focusedData.staff.no_hp, &windowM->forms.staffPage[STAFF].fields[3].value);
-                        copyStringData(windowM->focusedData.staff.password, &windowM->forms.staffPage[STAFF].fields[4].value);
-                        copyStringData(windowM->focusedData.staff.email, &windowM->forms.staffPage[STAFF].fields[5].value);
-                        break;
                     case MANAJERSTAFF:
-                        copyStringData(windowM->focusedData.staff.id_staff, &windowM->forms.staffPage[STAFF].fields[0].value);
-                        copyStringData(windowM->focusedData.staff.nama, &windowM->forms.staffPage[STAFF].fields[1].value);
-                        copyStringData(windowM->focusedData.staff.tanggal_lahir, &windowM->forms.staffPage[STAFF].fields[2].value);
-                        copyStringData(windowM->focusedData.staff.no_hp, &windowM->forms.staffPage[STAFF].fields[3].value);
-                        copyStringData(windowM->focusedData.staff.password, &windowM->forms.staffPage[STAFF].fields[4].value);
-                        copyStringData(windowM->focusedData.staff.email, &windowM->forms.staffPage[STAFF].fields[5].value);
-                        copyStringData(windowM->focusedData.staff.role, &windowM->forms.staffPage[STAFF].fields[6].value);
+                        copyStringData(windowM->focusedData.staff.id_staff, &windowM->forms.staffPage[MANAJERSTAFF].fields[0].value);
+                        copyStringData(windowM->focusedData.staff.nama, &windowM->forms.staffPage[MANAJERSTAFF].fields[1].value);
+                        copyStringData(windowM->focusedData.staff.tanggal_lahir, &windowM->forms.staffPage[MANAJERSTAFF].fields[2].value);
+                        copyStringData(windowM->focusedData.staff.no_hp, &windowM->forms.staffPage[MANAJERSTAFF].fields[3].value);
+                        copyStringData(windowM->focusedData.staff.password, &windowM->forms.staffPage[MANAJERSTAFF].fields[4].value);
+                        copyStringData(windowM->focusedData.staff.email, &windowM->forms.staffPage[MANAJERSTAFF].fields[5].value);
+                        copyStringData(windowM->focusedData.staff.role, &windowM->forms.staffPage[MANAJERSTAFF].fields[6].value);
                         break;
                     case MURID:
                         char tingkatBuff[4];
@@ -264,7 +256,7 @@ void updateView(windowModel *windowM)
                 case KEY_ENTER:
 
                     windowM->selectedPage = strcmp(windowM->authUser.role, "MANAJER") == 0 ? windowM->curPos + 8 : windowM->curPos;
-                    if (windowM->selectedPage == 7 || windowM->selectedPage == 10)
+                    if (windowM->selectedPage == 6 || windowM->selectedPage == 10)
                     {
                         logoutFunction(windowM);
                         return;

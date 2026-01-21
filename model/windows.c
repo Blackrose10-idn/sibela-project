@@ -16,12 +16,6 @@ void showToast(TOAST *toast, char title[], char message[])
 
 void initForm(windowModel *windowM)
 {
-    windowM->forms.staffPage[STAFF].fields[1] = (InputField){.label = "Nama", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[STAFF].fields[2] = (InputField){.label = "Tanggal Lahir", .type = DATEINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[STAFF].fields[3] = (InputField){.label = "No. HP", .type = PHONENOINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[STAFF].fields[4] = (InputField){.label = "Password", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[STAFF].fields[5] = (InputField){.label = "Email", .type = EMAILINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[STAFF].fields[6] = (InputField){.label = "Submit", .type = BUTTONINPUT};
     windowM->forms.staffPage[MANAJERSTAFF].fields[1] = (InputField){.label = "Nama", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[MANAJERSTAFF].fields[2] = (InputField){.label = "Tanggal Lahir", .type = DATEINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[MANAJERSTAFF].fields[3] = (InputField){.label = "No. HP", .type = PHONENOINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
@@ -45,7 +39,6 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[RUANGAN].fields[3] = (InputField){.label = "Submit", .type = BUTTONINPUT};
     windowM->forms.staffPage[MAPEL].fields[1] = (InputField){.label = "Nama Mapel", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[MAPEL].fields[2] = (InputField){.label = "Submit", .type = BUTTONINPUT};
-    windowM->forms.staffPage[STAFF].nField = 6;
     windowM->forms.staffPage[MANAJERSTAFF].nField = 7;
     windowM->forms.staffPage[MURID].nField = 6;
     windowM->forms.staffPage[MAPEL].nField = 2;
@@ -53,13 +46,11 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[PENGAJAR].nField = 5;
     windowM->forms.staffPage[RUANGAN].nField = 3;
     windowM->forms.staffPage[PEMBAYARAN].nField = 4;
-    windowM->forms.staffPage[STAFF].fieldPerPage = 4;
     windowM->forms.staffPage[MANAJERSTAFF].fieldPerPage = 4;
     windowM->forms.staffPage[MAPEL].fieldPerPage = 2;
     windowM->forms.staffPage[MURID].fieldPerPage = 4;
     windowM->forms.staffPage[PENGAJAR].fieldPerPage = 5;
     windowM->forms.staffPage[RUANGAN].fieldPerPage = 3;
-    windowM->forms.staffPage[STAFF].selectedField = -1;
     windowM->forms.staffPage[MANAJERSTAFF].selectedField = -1;
     windowM->forms.staffPage[MAPEL].selectedField = -1;
     windowM->forms.staffPage[MURID].selectedField = -1;
@@ -67,10 +58,7 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[RUANGAN].selectedField = -1;
     windowM->forms.staffPage[JADWAL].fieldPerPage = 4;
     windowM->forms.staffPage[PEMBAYARAN].fieldPerPage = 4;
-    windowM->forms.staffPage[STAFF].createFunc = createStaff;
     windowM->forms.staffPage[MANAJERSTAFF].createFunc = createStaffManajer;
-    windowM->forms.staffPage[STAFF].updateFunction = updateStaff;
-    windowM->forms.staffPage[STAFF].updateFunction = updateStaff;
     windowM->forms.staffPage[MAPEL].createFunc = createMapel;
     windowM->forms.staffPage[MAPEL].updateFunction = updateMapel;
     windowM->forms.staffPage[MURID].createFunc = createMurid;
@@ -82,7 +70,6 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[JADWAL].createFunc = createJadwalPertemuan;
     windowM->forms.staffPage[PEMBAYARAN].createFunc = createPembayaran;
     windowM->forms.staffPage[JADWAL].updateFunction = updateJadwalPertemuan;
-    windowM->dataFetchers.staffPage[STAFF] = findAllStaff;
     windowM->dataFetchers.staffPage[MANAJERSTAFF] = findAllStaff;
     windowM->dataFetchers.staffPage[MURID] = findAllMurid;
     windowM->dataFetchers.staffPage[PENGAJAR] = findAllPengajar;

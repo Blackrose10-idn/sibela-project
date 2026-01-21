@@ -1,5 +1,6 @@
 #include "create.h"
 #include <math.h>
+#include "../../../../../libs/headers/raygui.h"
 
 void drawStaffCreate(windowModel *windowM)
 {
@@ -9,6 +10,7 @@ void drawStaffCreate(windowModel *windowM)
     int start_y = 1080 / 2 - 300;
     int padding = 5;
     int font_size = 32;
+
     DrawTextEx(windowM->fontStyle.regular, "TAMBAH STAFF",
                (Vector2){start_x + 390,
                          start_y - 120},
@@ -39,38 +41,63 @@ void drawStaffCreate(windowModel *windowM)
             drawInputBox(windowM, &windowM->forms.staffPage[windowM->selectedPage].fields[i].value, textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, i, 0);
             break;
 
+        case ROLEINPUT:
+            DrawTextEx(windowM->fontStyle.medium,
+                       windowM->forms.staffPage[windowM->selectedPage].fields[i].label,
+                       (Vector2){(int)textBox.x, (int)textBox.y - 44},
+                       40, 0, SIBELAWHITE);
+            if (windowM->forms.staffPage[windowM->selectedPage].fields[i].value.charLen < 1)
+            {
+
+                strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, "FRONTDESK");
+                windowM->forms.staffPage[windowM->selectedPage].fields[i].value.charLen = 9;
+            }
+            int isTrue = strcmp(windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, "FRONTDESK") == 0;
+            if (GuiButton(textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text))
+            {
+                if (isTrue)
+                {
+                    strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, "MANAJER");
+                    windowM->forms.staffPage[windowM->selectedPage].fields[i].value.charLen = 7;
+                }
+                else
+                {
+
+                    strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, "FRONTDESK");
+                    windowM->forms.staffPage[windowM->selectedPage].fields[i].value.charLen = 9;
+                }
+            }
+            break;
+
         case BUTTONINPUT:
         {
-        const char *label =
-        windowM->forms.staffPage[windowM->selectedPage].fields[i].label;
+            const char *label =
+                windowM->forms.staffPage[windowM->selectedPage].fields[i].label;
 
-        Vector2 textSize = MeasureTextEx(
-        windowM->fontStyle.medium,
-        label,
-        40,
-        0
-        );
+            Vector2 textSize = MeasureTextEx(
+                windowM->fontStyle.medium,
+                label,
+                40,
+                0);
 
-        if (windowM->curPos == i)
-        {
-            DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
-        }
-        else
-        {
-            DrawRectangleRoundedLines(buttonBox, 0.3f, 0, SIBELAWHITE);
-        }
+            if (windowM->curPos == i)
+            {
+                DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
+            }
+            else
+            {
+                DrawRectangleRoundedLines(buttonBox, 0.3f, 0, SIBELAWHITE);
+            }
 
-        DrawTextEx(
-        windowM->fontStyle.medium,
-        label,
-        (Vector2){
-            buttonBox.x + buttonBox.width  / 2 - textSize.x / 2,
-            buttonBox.y + buttonBox.height / 2 - textSize.y / 2
-        },
-        40,
-        0,
-        SIBELAWHITE
-        );
+            DrawTextEx(
+                windowM->fontStyle.medium,
+                label,
+                (Vector2){
+                    buttonBox.x + buttonBox.width / 2 - textSize.x / 2,
+                    buttonBox.y + buttonBox.height / 2 - textSize.y / 2},
+                40,
+                0,
+                SIBELAWHITE);
         }
         break;
         }

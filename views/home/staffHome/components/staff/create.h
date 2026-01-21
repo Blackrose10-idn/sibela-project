@@ -13,6 +13,8 @@
 #include "../../../../../data/staf.h"
 #include "../../../../../constants/color.h"
 
+extern int isFormActive;
+
 void drawStaffCreate(windowModel *windowM);
 
 #endif
