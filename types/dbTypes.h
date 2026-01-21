@@ -34,7 +34,6 @@ typedef enum
 
 typedef enum
 {
-    PROFIL,
     JADWALMURID,
     MATERIMURID,
     PEMBAYARANMURID

@@ -519,7 +519,7 @@ void updateView(windowModel *windowM)
                 {
                 case KEY_ENTER:
 
-                    if (windowM->curPos == 4)
+                    if (windowM->curPos == 3)
                     {
                         logoutFunction(windowM);
                         return;

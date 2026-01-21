@@ -3,7 +3,6 @@
 void drawMuridHome(windowModel *windowM)
 {
     Menus opsi[] = {
-        (Menus){"Profil", 0},
         (Menus){"Jadwal Pertemuan", 0},
         (Menus){"Materi", 0},
         (Menus){"Pembayaran", 0},

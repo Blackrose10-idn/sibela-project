@@ -4,7 +4,7 @@ void drawPengajarHome(windowModel *windowM)
 {
     Menus opsi[] = {
         (Menus){"Absensi", 0},
-        (Menus){"Pertemuan", 0},
+        (Menus){"Jadwal Pertemuan", 0},
         (Menus){"Materi", 0},
         (Menus){"Keluar", 1},
     };
