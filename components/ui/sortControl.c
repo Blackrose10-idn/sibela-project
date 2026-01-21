@@ -3,10 +3,10 @@
 
 void DrawSortControl(windowModel *windowM, Vector2 pos)
 {
-    Rectangle button = {.width = 90, .height = 50, .x = pos.x + 5, .y = pos.y};
+    Rectangle button = {.width = 120, .height = 50, .x = pos.x + 5, .y = pos.y};
     Vector2 leng = MeasureTextEx(windowM->fontStyle.regular, "Urutkan:", 20, 0);
 
-    if (GuiButton(button, windowM->datas.sortBy == ASC ? "ASC" : "DESC"))
+    if (GuiButton(button, windowM->datas.sortBy == ASC ? "Teratas" : "Terbawah"))
     {
         switch (windowM->datas.sortBy)
         {

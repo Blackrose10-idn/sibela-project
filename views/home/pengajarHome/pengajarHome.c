@@ -6,7 +6,7 @@ void drawPengajarHome(windowModel *windowM)
         (Menus){"Absensi", 0},
         (Menus){"Pertemuan", 0},
         (Menus){"Materi", 0},
-        (Menus){"Log out", 1},
+        (Menus){"Keluar", 1},
     };
     int gap = 50;
     int startX = 35;
