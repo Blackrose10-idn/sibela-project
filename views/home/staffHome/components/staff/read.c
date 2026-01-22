@@ -15,7 +15,7 @@ void drawStaffRead(windowModel *windowM)
                          start_y - 120},
                64, 0,
                SIBELAWHITE);
-
+    drawSearchBar(windowM, (Vector2){start_x + 5 * cell_width + padding - 364, start_y - cell_height - 100});
     if (windowM->datas.nStaf == 0)
     {
         DrawTextEx(

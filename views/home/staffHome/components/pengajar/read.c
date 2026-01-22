@@ -15,7 +15,7 @@ void drawPengajarRead(windowModel *windowM)
                          start_y - 120},
                64, 0,
                SIBELAWHITE);
-
+    drawSearchBar(windowM, (Vector2){start_x + 5 * cell_width + padding - 364, start_y - cell_height - 100});
     if (windowM->datas.nPengajar == 0)
     {
         DrawTextEx(
@@ -23,12 +23,10 @@ void drawPengajarRead(windowModel *windowM)
             "Belum ada data Pengajar",
             (Vector2){
                 start_x + 380,
-                start_y + 290
-            },
+                start_y + 290},
             40,
             2,
-            Fade(SIBELAWHITE, 0.6f)
-        );
+            Fade(SIBELAWHITE, 0.6f));
         return;
     }
 
@@ -62,7 +60,7 @@ void drawPengajarRead(windowModel *windowM)
                          start_y - cell_height + padding},
                font_size, 0,
                SIBELAWHITE);
-    for ( row = 0; row < windowM->datas.nPengajar; row++)
+    for (row = 0; row < windowM->datas.nPengajar; row++)
     {
         for (int col = 0; col < 4; col++)
         {
@@ -98,10 +96,9 @@ void drawPengajarRead(windowModel *windowM)
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);
-
     }
     DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->datas.page, windowM->datas.totalPages),
-               (Vector2){start_x , start_y + (row * cell_height) + 30},
+               (Vector2){start_x, start_y + (row * cell_height) + 30},
                40, 0,
                SIBELAWHITE);
     if (windowM->isModalShown)

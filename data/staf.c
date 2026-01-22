@@ -65,10 +65,17 @@ void findAllStaff(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
     SQLRETURN ret;
     int count;
     SQLUSMALLINT rowStatus[100];
+    char charString[100];
+
+    sprintf(charString, "%%%s%%", datas->searchString);
 
     SQLLEN rowsFetched = 0;
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    ret = SQLExecDirect(stmt, (SQLCHAR *)"SELECT COUNT(*) AS row_count FROM staff", SQL_NTS);
+    SQLPrepare(stmt, (SQLCHAR *)"SELECT COUNT(*) AS row_count FROM staff WHERE id_staff LIKE ? OR nama LIKE ?", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 0, 0, charString, 0, NULL);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 0, 0, charString, 0, NULL);
+
+    ret = SQLExecute(stmt);
     if (SQL_SUCCEEDED(ret))
     {
         if (SQL_SUCCEEDED(SQLFetch(stmt)))
@@ -83,11 +90,14 @@ void findAllStaff(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     if (datas->sortBy == DESC)
-        SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM staff ORDER BY tanggal_masuk DESC, id_staff DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM staff WHERE id_staff LIKE ? OR nama LIKE ? ORDER BY tanggal_masuk DESC, id_staff DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
     else
-        SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM staff ORDER BY tanggal_masuk ASC, id_staff ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
-    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
-    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM staff WHERE id_staff LIKE ? OR nama LIKE ? ORDER BY tanggal_masuk ASC, id_staff ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 0, 0, charString, 0, NULL);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 0, 0, charString, 0, NULL);
+
+    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
+    SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
 
     ret = SQLExecute(stmt);
     while (SQL_SUCCEEDED(ret = SQLFetch(stmt)))

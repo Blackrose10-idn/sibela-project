@@ -16,6 +16,7 @@ void drawMapelRead(windowModel *windowM)
                64, 0,
                SIBELAWHITE);
 
+    drawSearchBar(windowM, (Vector2){start_x + 2 * cell_width + padding - 364, start_y - cell_height - 100});
     if (windowM->datas.nMapel == 0)
     {
         DrawTextEx(
@@ -23,12 +24,10 @@ void drawMapelRead(windowModel *windowM)
             "Belum ada data Pelajaran",
             (Vector2){
                 start_x + 380,
-                start_y + 290
-            },
+                start_y + 290},
             40,
             2,
-            Fade(SIBELAWHITE, 0.6f)
-        );
+            Fade(SIBELAWHITE, 0.6f));
         return;
     }
 
@@ -80,7 +79,7 @@ void drawMapelRead(windowModel *windowM)
                    SIBELAWHITE);
     }
     DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->datas.page, windowM->datas.totalPages),
-               (Vector2){start_x , start_y + (row * cell_height) + 30},
+               (Vector2){start_x, start_y + (row * cell_height) + 30},
                40, 0,
                SIBELAWHITE);
 

@@ -11,6 +11,7 @@
 #include "../../../../../components/header.h"
 #include "../../../../../data/mapel.h"
 #include "../../../../../constants/color.h"
+#include "../../../../../components/ui/searchBar.h"
 
 void drawMapelRead(windowModel *windowM);
 
