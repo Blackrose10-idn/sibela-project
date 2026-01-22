@@ -36,7 +36,7 @@ void drawAbsensiPengajarRead(windowModel *windowM)
     case PRESENSI:
         for (int i = 0; i < windowM->pengajarHomeState.absensiPage.nMurid; i++)
         {
-            char *formattedText = TextFormat("%s %s", windowM->pengajarHomeState.absensiPage.paginatedAbsensi[i].nama_murid, windowM->pengajarHomeState.absensiPage.paginatedAbsensi[i].isHadir ? "HADIR" : "Belom");
+            char *formattedText = TextFormat("%s %s", windowM->pengajarHomeState.absensiPage.paginatedAbsensi[i].nama_murid, windowM->pengajarHomeState.absensiPage.paginatedAbsensi[i].isHadir ? "HADIR" : "TIDAK HADIR");
             Vector2 textLen = MeasureTextEx(windowM->fontStyle.regular, formattedText, 64, 0);
             if (windowM->curPos == i)
             {
@@ -62,7 +62,7 @@ void drawAbsensiPengajarRead(windowModel *windowM)
                                       .y = 1080 - 150,
                                       .width = 200,
                                       .height = 80};
-            if (GuiButton(submitButton, "Submit"))
+            if (GuiButton(submitButton, "Kumpulkan"))
             {
                 windowM->pengajarHomeState.absensiPage.submitFunc(windowM->pengajarHomeState.absensiPage.paginatedAbsensi, windowM->datas.nMuridAbsensi, windowM->focusedData.jadwal.id_pertemuan, windowM->dbConn, windowM->authUser);
             }
