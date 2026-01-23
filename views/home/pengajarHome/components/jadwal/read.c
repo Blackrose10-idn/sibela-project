@@ -11,12 +11,12 @@ void drawJadwalPengajarRead(windowModel *windowM)
     int padding = 5;
     int font_size = 32;
 
-    DrawTextEx(windowM->fontStyle.regular, "JADWAL PERTEMUAN",
+    DrawTextEx(windowM->fontStyle.bold, "JADWAL PERTEMUAN",
                (Vector2){start_x - 225,
                          start_y - 150},
                64, 0,
                SIBELAWHITE);
-    
+
     if (windowM->datas.nJadwalPertemuan == 0)
     {
         DrawTextEx(
@@ -24,12 +24,10 @@ void drawJadwalPengajarRead(windowModel *windowM)
             "Belum ada data Jadwal Pertemuan",
             (Vector2){
                 start_x - 235,
-                start_y + 290
-            },
+                start_y + 290},
             40,
             2,
-            Fade(SIBELAWHITE, 0.6f)
-        );
+            Fade(SIBELAWHITE, 0.6f));
         return;
     }
 
@@ -38,7 +36,7 @@ void drawJadwalPengajarRead(windowModel *windowM)
         DrawMeetingPengajarCard(windowM->datas.jadwalPertemuans[row], (Vector2){start_x - 400, start_y + row * 200}, 800, windowM->fontStyle, 0);
     }
     DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->datas.page, windowM->datas.totalPages),
-               (Vector2){start_x , start_y + (row * cell_height) + 30},
+               (Vector2){start_x, start_y + (row * cell_height) + 30},
                40, 0,
                SIBELAWHITE);
 }

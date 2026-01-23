@@ -38,8 +38,9 @@ char *parseDateToString(time_t cDate)
     char *dateBuff = (char *)malloc(20 * sizeof(char));
     struct tm *parsedDate;
 
-    if (dateBuff == NULL) return NULL;
-    
+    if (dateBuff == NULL)
+        return NULL;
+
     parsedDate = localtime(&cDate);
 
     snprintf(dateBuff, 20, "%d-%d-%d", parsedDate->tm_year + 1900, parsedDate->tm_mon, parsedDate->tm_mday);
@@ -65,8 +66,9 @@ void copySelectData(char label[], char value[], SelectProp *dest)
 char *intToString(int i)
 {
     char *buff = (char *)malloc(20 * sizeof(char));
-    if (buff == NULL) return NULL;
-    
+    if (buff == NULL)
+        return NULL;
+
     snprintf(buff, 20, "%d", i);
 
     return buff;
@@ -144,4 +146,54 @@ void paginateAbsensi(MuridAbsensi absensis[], int nAbsensi, int nPage, int page,
             (*outCount)++;
         }
     }
+}
+
+struct tm ParseSQLDateTime(const char *dateStr)
+{
+    struct tm timeinfo = {0};
+    int year, month, day, hour, min, sec;
+
+    // sscanf returns the number of items successfully filled
+    if (sscanf(dateStr, "%d-%d-%d %d:%d:%d",
+               &year, &month, &day, &hour, &min, &sec) == 6)
+    {
+        timeinfo.tm_year = year - 1900; // Years since 1900
+        timeinfo.tm_mon = month - 1;    // Months 0-11
+        timeinfo.tm_mday = day;
+        timeinfo.tm_hour = hour;
+        timeinfo.tm_min = min;
+        timeinfo.tm_sec = sec;
+
+        // Optional: call mktime to normalize the structure (e.g., set tm_wday)
+        mktime(&timeinfo);
+    }
+
+    return timeinfo;
+}
+
+struct tm ParseSQLDate(const char *dateStr)
+{
+    struct tm timeinfo = {0};
+    int year, month, day;
+
+    // sscanf returns the number of items successfully filled
+    if (sscanf(dateStr, "%d-%d-%d",
+               &year, &month, &day) == 3)
+    {
+        timeinfo.tm_year = year - 1900; // Years since 1900
+        timeinfo.tm_mon = month - 1;    // Months 0-11
+        timeinfo.tm_mday = day;
+        // Optional: call mktime to normalize the structure (e.g., set tm_wday)
+        mktime(&timeinfo);
+    }
+
+    return timeinfo;
+}
+
+const char *FormatDatePretty(struct tm timeinfo)
+{
+    static char buffer[64];
+    // Example output: "23 Jan 2026, 11:23"
+    strftime(buffer, sizeof(buffer), "%d %b %Y", &timeinfo);
+    return buffer;
 }

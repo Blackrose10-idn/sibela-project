@@ -7,17 +7,18 @@ void drawMuridRead(windowModel *windowM)
     int i = 1;
     int cell_width = 250;
     int cell_height = 50;
-    int start_x = 1920 / 2 - 600 + 100;
-    int start_y = 1080 / 2 - 300;
+    int start_x = 485;
+    int start_y = 320;
     int padding = 5;
     int font_size = 32;
-    DrawTextEx(windowM->fontStyle.regular, "DATA Murid",
-               (Vector2){start_x + 390,
-                         start_y - 120},
+    DrawTextEx(windowM->fontStyle.bold, "DATA Murid",
+               (Vector2){start_x + 3 * (cell_width + padding) - 290,
+                         start_y - 200},
                64, 0,
                SIBELAWHITE);
 
-    drawSearchBar(windowM, (Vector2){start_x + 5 * cell_width + padding - 364, start_y - cell_height - 100});
+    drawSearchBar(windowM, (Vector2){start_x + 5 * (cell_width + padding) - 410, start_y - cell_height - 85});
+    DrawSortControl(windowM, (Vector2){.x = start_x, .y = start_y - cell_height - 65});
     if (windowM->datas.nMurid == 0)
     {
         DrawTextEx(
@@ -98,7 +99,7 @@ void drawMuridRead(windowModel *windowM)
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);
-        DrawTextEx(windowM->fontStyle.regular, windowM->datas.murids[row].tanggal_masuk,
+        DrawTextEx(windowM->fontStyle.regular, FormatDatePretty(ParseSQLDate(windowM->datas.murids[row].tanggal_masuk)),
                    (Vector2){start_x + 3 * cell_width + padding,
                              start_y + row * cell_height + padding},
                    font_size, 0,

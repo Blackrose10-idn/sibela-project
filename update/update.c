@@ -28,12 +28,31 @@ void updateView(windowModel *windowM)
         windowM->shouldClose = 1;
         break;
     case KEY_F2:
+        windowM->authUser = (user){
+            .id = "STAFF001",
+            .nama = "Dola",
+            .role = "FRONTDESK"};
+        windowM->currWindow = STAFHOME;
+        break;
+    case KEY_F5:
+        windowM->authUser = (user){
+            .id = "STAFF005",
+            .nama = "Budi Santoso",
+            .role = "MANAJER"};
         windowM->currWindow = STAFHOME;
         break;
     case KEY_F3:
+        windowM->authUser = (user){
+            .id = "MUR001",
+            .nama = "Irsyad Rusendra",
+            .role = "MURID"};
         windowM->currWindow = MURIDHOME;
         break;
     case KEY_F4:
+        windowM->authUser = (user){
+            .id = "PENG001",
+            .nama = "Apissina",
+            .role = "PENGAJAR"};
         windowM->currWindow = PENGAJARHOME;
     }
     switch (windowM->currWindow)
@@ -46,6 +65,7 @@ void updateView(windowModel *windowM)
                 windowM->curPos -= 1;
             break;
         case KEY_DOWN:
+            // if ((n->curPos < 7 && (windowM->activeSubWindow == CREATE || windowM->activeSubWindow == UPDATE) && windowM->forms.staffPage[windowM->selectedPage].selectedField == -1) || (windowM->curPos > 0 && windowM->activeSubWindow == READ) || (windowM->curPos > 0 && (windowM->activeSubWindow == CREATE || windowM->activeSubWindow == UPDATE) && windowM->forms.staffPage[windowM->selectedPage].selectedField > 0))
             windowM->curPos += 1;
             break;
         case KEY_TAB:
@@ -157,7 +177,7 @@ void updateView(windowModel *windowM)
                 switch (ch)
                 {
                 case KEY_N:
-                    clearFields(windowM->forms.staffPage[windowM->currWindow].fields);
+                    clearFields(windowM->forms.staffPage[windowM->selectedPage].fields);
                     clearSelects(windowM->selectByPage.staffPage);
 
                     if (windowM->selectedPage == JADWAL)
@@ -351,7 +371,7 @@ void updateView(windowModel *windowM)
                 break;
             }
         }
-        else if (!windowM->cursorEnabled && windowM->activeSubWindow == READ)
+        else if (!windowM->cursorEnabled && windowM->activeSubWindow == READ && !windowM->isKeyboardInterrupted)
         {
             switch (ch)
             {
@@ -361,15 +381,69 @@ void updateView(windowModel *windowM)
             case KEY_DOWN:
                 windowM->curPos += 1;
                 break;
-
+            case KEY_RIGHT:
+                if (windowM->datas.page < windowM->datas.totalPages)
+                {
+                    windowM->datas.page++;
+                    windowM->curPos = 0;
+                    windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
+                }
+                break;
+            case KEY_LEFT:
+                if (windowM->datas.page > 1)
+                {
+                    windowM->datas.page--;
+                    windowM->curPos = 0;
+                    windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
+                }
+                break;
             default:
-                if (windowM->activeSubWindow == ABSENSI)
+                if (windowM->selectedPage == MATERI)
+                {
+                    switch (ch)
+                    {
+                    case KEY_N:
+                        clearFields(windowM->forms.pengajarPage[windowM->selectedPage].fields);
+                        windowM->selectByPage.pengajarPage[windowM->selectedPage] = (Select){};
+                        windowM->activeSubWindow = CREATE;
+                        windowM->page = 1;
+                        for (int i = 0; i < 6; i++)
+                        {
+                            windowM->selectByPage.pengajarPage[i].nMultiSelected = 0;
+                        }
+                        windowM->curPos = 1;
+                        break;
+                    case KEY_D:
+                        windowM->isModalShown = 1;
+                        break;
+                    case KEY_U:
+                        copyStringData(windowM->focusedData.materi.id_materi, &windowM->forms.pengajarPage[MATERI].fields[0].value);
+                        copySelectData(windowM->focusedData.materi.id_mapel, windowM->focusedData.materi.id_mapel, &windowM->selectByPage.pengajarPage[MATERI].selected);
+                        copyStringData(windowM->focusedData.materi.judul_materi, &windowM->forms.pengajarPage[MATERI].fields[2].value);
+                        copyStringData(windowM->focusedData.materi.isi_materi, &windowM->forms.pengajarPage[MATERI].fields[3].value);
+                        windowM->activeSubWindow = UPDATE;
+                        windowM->page = 1;
+                        windowM->curPos = 1;
+                        break;
+                    case KEY_TAB:
+                        windowM->curPos = 0;
+                        windowM->cursorEnabled = 1;
+                        windowM->activeSubWindow = -1;
+                        break;
+                    }
+                }
+                else if (windowM->selectedPage == ABSENSI)
                 {
                     switch (windowM->pengajarHomeState.absensiPage.activeSubWindow)
                     {
                     case MAIN:
                         switch (ch)
                         {
+                        case KEY_TAB:
+                            windowM->curPos = 0;
+                            windowM->cursorEnabled = 1;
+                            windowM->activeSubWindow = -1;
+                            break;
                         case KEY_ENTER:
                             windowM->pengajarHomeState.absensiPage.page = 1;
                             windowM->curPos = 0;
@@ -377,39 +451,21 @@ void updateView(windowModel *windowM)
                             paginateAbsensi(windowM->datas.muridAbsensis, windowM->datas.nMuridAbsensi, windowM->pengajarHomeState.absensiPage.nPage, windowM->pengajarHomeState.absensiPage.page, &windowM->pengajarHomeState.absensiPage.nMurid, windowM->pengajarHomeState.absensiPage.paginatedAbsensi);
                             windowM->pengajarHomeState.absensiPage.activeSubWindow = PRESENSI;
                             break;
-                        case KEY_TAB:
-                            windowM->curPos = 0;
-                            windowM->cursorEnabled = 1;
-                            windowM->activeSubWindow = -1;
-                            break;
-                        case KEY_RIGHT:
-                            if (windowM->datas.page < windowM->datas.totalPages)
-                            {
-                                windowM->datas.page++;
-                                windowM->curPos = 0;
-                                windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
-                            }
-                            break;
-                        case KEY_LEFT:
-                            if (windowM->datas.page > 1)
-                            {
-                                windowM->datas.page--;
-                                windowM->curPos = 0;
-                                windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
-                            }
-                            break;
                         }
                         break;
                     case PRESENSI:
                         switch (ch)
                         {
                         case KEY_TAB:
+                            windowM->pengajarHomeState.absensiPage.getMurids(&windowM->datas, &windowM->pengajarHomeState.absensiPage.nPage, windowM->dbConn, &windowM->focusedData.jadwal);
+                            paginateAbsensi(windowM->datas.muridAbsensis, windowM->datas.nMuridAbsensi, windowM->pengajarHomeState.absensiPage.nPage, windowM->pengajarHomeState.absensiPage.page, &windowM->pengajarHomeState.absensiPage.nMurid, windowM->pengajarHomeState.absensiPage.paginatedAbsensi);
                             windowM->pengajarHomeState.absensiPage.activeSubWindow = MAIN;
                             break;
                         case KEY_RIGHT:
                             if (windowM->pengajarHomeState.absensiPage.page < windowM->pengajarHomeState.absensiPage.nPage)
                             {
                                 windowM->pengajarHomeState.absensiPage.page++;
+                                windowM->pengajarHomeState.absensiPage.getMurids(&windowM->datas, &windowM->pengajarHomeState.absensiPage.nPage, windowM->dbConn, &windowM->focusedData.jadwal);
                                 paginateAbsensi(windowM->datas.muridAbsensis, windowM->datas.nMuridAbsensi, windowM->pengajarHomeState.absensiPage.nPage, windowM->pengajarHomeState.absensiPage.page, &windowM->pengajarHomeState.absensiPage.nMurid, windowM->pengajarHomeState.absensiPage.paginatedAbsensi);
                                 windowM->curPos = 0;
                             }
@@ -418,6 +474,7 @@ void updateView(windowModel *windowM)
                             if (windowM->pengajarHomeState.absensiPage.page > 1)
                             {
                                 windowM->pengajarHomeState.absensiPage.page--;
+                                windowM->pengajarHomeState.absensiPage.getMurids(&windowM->datas, &windowM->pengajarHomeState.absensiPage.nPage, windowM->dbConn, &windowM->focusedData.jadwal);
                                 paginateAbsensi(windowM->datas.muridAbsensis, windowM->datas.nMuridAbsensi, windowM->pengajarHomeState.absensiPage.nPage, windowM->pengajarHomeState.absensiPage.page, &windowM->pengajarHomeState.absensiPage.nMurid, windowM->pengajarHomeState.absensiPage.paginatedAbsensi);
                                 windowM->curPos = 0;
                             }
@@ -426,18 +483,18 @@ void updateView(windowModel *windowM)
                         break;
                     }
                 }
+
+                else
+                {
+                case KEY_TAB:
+                    windowM->curPos = 0;
+                    windowM->cursorEnabled = 1;
+                    windowM->activeSubWindow = -1;
+                    break;
+                }
                 break;
             }
         }
-        // if (windowM->forms.pengajarPage[windowM->selectedPage].selectedField >= 0)
-        // {
-        //     switch (ch)
-        //     {
-        //     KEY_TAB:
-        //         windowM->forms.pengajarPage[windowM->selectedPage].selectedField = -1;
-        //         break;
-        //     }
-        // }
         else if (windowM->cursorEnabled)
         {
             switch (ch)
@@ -531,13 +588,19 @@ void updateView(windowModel *windowM)
         switch (ch)
         {
         case KEY_TAB:
+            copyStringData("", &windowM->loginData.email);
+            copyStringData("", &windowM->loginData.password);
+            windowM->currWindow = LANDINGPAGE;
+            windowM->loginData.activeInput = 0;
             break;
 
         case KEY_DOWN:
-            windowM->loginData.activeInput++;
+            if (windowM->loginData.activeInput < 2)
+                windowM->loginData.activeInput++;
             break;
         case KEY_UP:
-            windowM->loginData.activeInput--;
+            if (windowM->loginData.activeInput > 0)
+                windowM->loginData.activeInput--;
             break;
 
         default:
@@ -566,13 +629,19 @@ void updateView(windowModel *windowM)
         switch (ch)
         {
         case KEY_TAB:
+            copyStringData("", &windowM->loginData.phoneNumber);
+            copyStringData("", &windowM->loginData.password);
+            windowM->currWindow = LANDINGPAGE;
+            windowM->loginData.activeInput = 0;
             break;
 
         case KEY_DOWN:
-            windowM->loginData.activeInput++;
+            if (windowM->loginData.activeInput < 2)
+                windowM->loginData.activeInput++;
             break;
         case KEY_UP:
-            windowM->loginData.activeInput--;
+            if (windowM->loginData.activeInput > 0)
+                windowM->loginData.activeInput--;
             break;
 
         default:
@@ -600,10 +669,12 @@ void updateView(windowModel *windowM)
         switch (ch)
         {
         case KEY_UP:
-            windowM->curPos -= 1;
+            if (windowM->curPos > 0)
+                windowM->curPos -= 1;
             break;
         case KEY_DOWN:
-            windowM->curPos += 1;
+            if (windowM->curPos < 3)
+                windowM->curPos += 1;
             break;
         case KEY_ENTER:
             windowM->currWindow = windowM->navigation.landingPage[windowM->curPos].targetPage;

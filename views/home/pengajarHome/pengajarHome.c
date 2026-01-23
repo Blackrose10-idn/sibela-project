@@ -41,15 +41,12 @@ void drawPengajarHome(windowModel *windowM)
         {
         case PERTEMUAN:
             drawJadwalPengajarRead(windowM);
-            DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
             break;
         case ABSENSI:
             drawAbsensiPengajarRead(windowM);
-            DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
             break;
         case MATERI:
             drawMateriRead(windowM);
-            DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
             break;
         default:
             drawWelcomePage(windowM);
@@ -61,9 +58,6 @@ void drawPengajarHome(windowModel *windowM)
     {
         switch (windowM->selectedPage)
         {
-        case PERTEMUAN:
-            drawJadwalPengajarRead(windowM);
-            break;
         case MATERI:
             drawMateriCreate(windowM);
             break;

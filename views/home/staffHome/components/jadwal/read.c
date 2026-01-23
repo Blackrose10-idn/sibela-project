@@ -6,14 +6,14 @@ void drawJadwalRead(windowModel *windowM)
     int row;
     int cell_width = 280;
     int cell_height = 50;
-    int start_x = 1920 / 2 - 600;
-    int start_y = 1080 / 2 - 300;
+    int start_x = 360;
+    int start_y = 320;
     int padding = 5;
     int font_size = 32;
     int materiPadding = 100;
-    DrawTextEx(windowM->fontStyle.regular, "DATA JADWAL",
-               (Vector2){start_x + 390,
-                         start_y - 120},
+    DrawTextEx(windowM->fontStyle.bold, "DATA JADWAL",
+               (Vector2){start_x + 3 * (cell_width + padding) - 310,
+                         start_y - 200},
                64, 0,
                SIBELAWHITE);
 
@@ -24,15 +24,14 @@ void drawJadwalRead(windowModel *windowM)
             "Belum ada data jadwal Pertemuan",
             (Vector2){
                 start_x + 380,
-                start_y + 290
-            },
+                start_y + 290},
             40,
             2,
-            Fade(SIBELAWHITE, 0.6f)
-        );
+            Fade(SIBELAWHITE, 0.6f));
         return;
     }
 
+    DrawSortControl(windowM, (Vector2){.x = start_x, .y = start_y - cell_height - 65});
     for (int col = 0; col < 5; col++)
     {
         Rectangle cellRect = {
@@ -110,7 +109,7 @@ void drawJadwalRead(windowModel *windowM)
                    SIBELAWHITE);
     }
     DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->datas.page, windowM->datas.totalPages),
-               (Vector2){start_x , start_y + (row * cell_height) + 30},
+               (Vector2){start_x, start_y + (row * cell_height) + 30},
                40, 0,
                SIBELAWHITE);
     if (windowM->isModalShown)

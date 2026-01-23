@@ -3,10 +3,10 @@
 
 void DrawSortControl(windowModel *windowM, Vector2 pos)
 {
-    Rectangle button = {.width = 120, .height = 50, .x = pos.x + 5, .y = pos.y};
-    Vector2 leng = MeasureTextEx(windowM->fontStyle.regular, "Urutkan:", 20, 0);
+    Vector2 leng = MeasureTextEx(windowM->fontStyle.regular, "Urutkan:", 32, 0);
+    Rectangle button = {.width = 160, .height = 50, .x = pos.x + leng.x + 5, .y = pos.y - 10};
 
-    if (GuiButton(button, windowM->datas.sortBy == ASC ? "Teratas" : "Terbawah", 0))
+    if (GuiButton(button, windowM->datas.sortBy == ASC ? "Terbawah" : "Teratas", 0))
     {
         switch (windowM->datas.sortBy)
         {
@@ -19,5 +19,5 @@ void DrawSortControl(windowModel *windowM, Vector2 pos)
         }
         windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, &windowM->authUser);
     }
-    DrawTextEx(windowM->fontStyle.regular, "Urutkan:", (Vector2){.x = pos.x - leng.x - 5, .y = pos.y}, 20, 0, SIBELAWHITE);
+    DrawTextEx(windowM->fontStyle.regular, "Urutkan:", (Vector2){.x = pos.x, .y = pos.y}, 32, 0, SIBELAWHITE);
 }

@@ -11,6 +11,7 @@
 #include "../../../../../components/header.h"
 #include "../../../../../data/ruangan.h"
 #include "../../../../../components/ui/searchBar.h"
+#include "../../../../../components/ui/sortControl.h"
 #include "../../../../../constants/color.h"
 
 void drawRuanganRead(windowModel *windowM);

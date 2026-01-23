@@ -21,5 +21,8 @@ void clearSelects(Select (*fields)[]);
 void copySelectData(char label[], char value[], SelectProp *dest);
 void popMultiSelectArray(SelectProp target, SelectProp domain[], int *nDomain);
 void paginateAbsensi(MuridAbsensi absensis[], int nAbsensi, int nPage, int page, int *outCount, MuridAbsensi sliced[]);
+struct tm ParseSQLDateTime(const char *dateStr);
+const char *FormatDatePretty(struct tm timeinfo);
+struct tm ParseSQLDate(const char *dateStr);
 
 #endif

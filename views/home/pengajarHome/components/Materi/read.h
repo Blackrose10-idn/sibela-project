@@ -10,6 +10,7 @@
 #include "../../../../../libs/utils.h"
 #include "../../../../../components/header.h"
 #include "../../../../../components/ui/searchBar.h"
+#include "../../../../../components/ui/sortControl.h"
 #include "../../../../../data/materi.h"
 #include "../../../../../constants/color.h"
 

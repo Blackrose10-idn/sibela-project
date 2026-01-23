@@ -17,14 +17,14 @@ void loginFunction(windowModel *windowM)
         if (strcspn(email, "@") == strlen(email) || strcspn(email, ".") == strlen(email))
         {
             windowM->loginData.email.validation.isInputInvalid = true;
-            strcpy(windowM->loginData.email.validation.errMessage, "Invalid Email!");
+            strcpy(windowM->loginData.email.validation.errMessage, "Email tidak valid!");
 
             invalid = true;
         }
-        if (strlen(pass) <= 5)
+        if (strlen(pass) <= 1)
         {
             windowM->loginData.password.validation.isInputInvalid = true;
-            strcpy(windowM->loginData.password.validation.errMessage, "Password too short!");
+            strcpy(windowM->loginData.password.validation.errMessage, "Kata sandi tidak valid!");
 
             invalid = true;
         }
@@ -35,7 +35,11 @@ void loginFunction(windowModel *windowM)
         Staf loginStaf = findStafbyEmail(windowM->loginData.email.text, windowM->dbConn);
 
         if (loginStaf.id_num == -1)
+        {
+            showToast(&windowM->toast, "Kredensial salah!", "Email/Kata Sandi salah!");
+
             return;
+        }
 
         if (strcmp(loginStaf.password, windowM->loginData.password.text) == 0)
         {
@@ -53,6 +57,11 @@ void loginFunction(windowModel *windowM)
             strcpy(windowM->authUser.role, loginStaf.role);
             windowM->currWindow = STAFHOME;
         }
+        else
+        {
+            showToast(&windowM->toast, "Kredensial salah!", "Email/Kata Sandi salah!");
+            return;
+        }
         break;
     case LOGINMURID:
         strcpy(phoneNum, windowM->loginData.phoneNumber.text);
@@ -61,14 +70,14 @@ void loginFunction(windowModel *windowM)
         if (strcspn(phoneNum, "0") != 0 || strlen(phoneNum) <= 10)
         {
             windowM->loginData.phoneNumber.validation.isInputInvalid = true;
-            strcpy(windowM->loginData.phoneNumber.validation.errMessage, "Invalid No. Telp!");
+            strcpy(windowM->loginData.phoneNumber.validation.errMessage, "No. Telp tidak valid!");
 
             invalid = true;
         }
-        if (strlen(pass) <= 5)
+        if (strlen(pass) <= 1)
         {
             windowM->loginData.password.validation.isInputInvalid = true;
-            strcpy(windowM->loginData.password.validation.errMessage, "Password too short!");
+            strcpy(windowM->loginData.password.validation.errMessage, "Kata Sandi tidak valid!");
 
             invalid = true;
         }
@@ -78,7 +87,11 @@ void loginFunction(windowModel *windowM)
         Murid loginMurid = findMuridbyPhoneNum(windowM->loginData.phoneNumber.text, windowM->dbConn);
 
         if (loginMurid.id_num == -1)
+        {
+            showToast(&windowM->toast, "Kredensial salah!", "No. Telpon/Kata sandi salah!");
+
             return;
+        }
 
         if (strcmp(loginMurid.password, windowM->loginData.password.text) == 0)
         {
@@ -96,6 +109,12 @@ void loginFunction(windowModel *windowM)
             strcpy(windowM->authUser.role, "MURID");
             windowM->currWindow = MURIDHOME;
         }
+        else
+        {
+            showToast(&windowM->toast, "Kredensial salah!", "No. Telpon/Kata sandi salah!");
+
+            return;
+        }
         break;
     case LOGINPENGAJAR:
         strcpy(phoneNum, windowM->loginData.phoneNumber.text);
@@ -104,14 +123,14 @@ void loginFunction(windowModel *windowM)
         if (strcspn(phoneNum, "0") != 0 || strlen(phoneNum) <= 10)
         {
             windowM->loginData.phoneNumber.validation.isInputInvalid = true;
-            strcpy(windowM->loginData.phoneNumber.validation.errMessage, "Invalid No. Telp!");
+            strcpy(windowM->loginData.phoneNumber.validation.errMessage, "No. Telp tidak valid!");
 
             invalid = true;
         }
-        if (strlen(pass) <= 5)
+        if (strlen(pass) <= 1)
         {
             windowM->loginData.password.validation.isInputInvalid = true;
-            strcpy(windowM->loginData.password.validation.errMessage, "Password too short!");
+            strcpy(windowM->loginData.password.validation.errMessage, "Kata sandi tidak valid!");
 
             invalid = true;
         }
@@ -121,7 +140,11 @@ void loginFunction(windowModel *windowM)
         Pengajar loginpengajar = findPengajarbyPhoneNum(windowM->loginData.phoneNumber.text, windowM->dbConn);
 
         if (loginpengajar.id_num == -1)
+        {
+            showToast(&windowM->toast, "Kredensial salah!", "No. Telpon/Kata sandi salah!");
+
             return;
+        }
         // printf("loginaw: %d\n", strcmp(loginpengajar.password, windowM->loginData.password.text));
 
         if (strcmp(loginpengajar.password, windowM->loginData.password.text) == 0)
@@ -139,6 +162,11 @@ void loginFunction(windowModel *windowM)
             strcpy(windowM->authUser.nama, loginpengajar.nama);
             strcpy(windowM->authUser.role, "PENGAJAR");
             windowM->currWindow = PENGAJARHOME;
+        }
+        else
+        {
+            showToast(&windowM->toast, "Kredensial salah!", "No. Telpon/Kata sandi salah!");
+            return;
         }
         break;
     }

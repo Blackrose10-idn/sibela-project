@@ -7,6 +7,7 @@
 
 int main()
 {
+    SetConfigFlags(FLAG_WINDOW_UNDECORATED);
     InitWindow(1920, 1080, "SIBELA: Sistem Bimbingan Belajar");
 
     ToggleFullscreen();

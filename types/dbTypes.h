@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include <unistd.h>
 #include <time.h>
@@ -175,7 +176,7 @@ typedef struct
     char nama_murid[100];
     char alasan[100];
     int charLenAlasan;
-    int isHadir;
+    bool isHadir;
     char waktu_absensi[30];
     int existed;
 } MuridAbsensi;
@@ -198,7 +199,8 @@ typedef struct
     int sumThisMonth;
 } PembayaranReport;
 
-typedef enum {
+typedef enum
+{
     MATERI_MAPEL = 0,
     MATERI_LIST,
     MATERI_DETAIL
@@ -220,7 +222,6 @@ typedef struct
     Mapel selectedMapel;
     int expandedIndex;
 } MateriPageState;
-
 
 // typedef struct
 //     {

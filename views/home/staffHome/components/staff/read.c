@@ -10,12 +10,12 @@ void drawStaffRead(windowModel *windowM)
     int start_y = 1080 / 2 - 300;
     int padding = 5;
     int font_size = 32;
-    DrawTextEx(windowM->fontStyle.regular, "DATA STAF",
+    DrawTextEx(windowM->fontStyle.bold, "DATA STAF",
                (Vector2){start_x + 390,
                          start_y - 120},
                64, 0,
                SIBELAWHITE);
-    drawSearchBar(windowM, (Vector2){start_x + 5 * cell_width + padding - 364, start_y - cell_height - 100});
+    drawSearchBar(windowM, (Vector2){start_x + 5 * (cell_width + padding) - 410, start_y - cell_height - 85});
     if (windowM->datas.nStaf == 0)
     {
         DrawTextEx(
@@ -102,7 +102,7 @@ void drawStaffRead(windowModel *windowM)
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);
-        DrawTextEx(windowM->fontStyle.regular, windowM->datas.staffs[row].tanggal_masuk,
+        DrawTextEx(windowM->fontStyle.regular, FormatDatePretty(ParseSQLDate(windowM->datas.staffs[row].tanggal_masuk)),
                    (Vector2){start_x + 4 * cell_width + padding,
                              start_y + row * cell_height + padding},
                    font_size, 0,

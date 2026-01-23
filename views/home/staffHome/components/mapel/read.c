@@ -6,17 +6,18 @@ void drawMapelRead(windowModel *windowM)
     int row;
     int cell_width = 450;
     int cell_height = 50;
-    int start_x = 1920 / 2 - 600 + 250;
-    int start_y = 1080 / 2 - 300;
+    int start_x = 660;
+    int start_y = 320;
     int padding = 5;
     int font_size = 32;
-    DrawTextEx(windowM->fontStyle.regular, "DATA MAPEL",
-               (Vector2){start_x + 390,
-                         start_y - 120},
+    DrawTextEx(windowM->fontStyle.bold, "DATA MAPEL",
+               (Vector2){start_x + 1.4 * (cell_width + padding) - 310,
+                         start_y - 200},
                64, 0,
                SIBELAWHITE);
 
-    drawSearchBar(windowM, (Vector2){start_x + 2 * cell_width + padding - 364, start_y - cell_height - 100});
+    drawSearchBar(windowM, (Vector2){start_x + 2 * (cell_width + padding) - 410, start_y - cell_height - 85});
+    DrawSortControl(windowM, (Vector2){.x = start_x, .y = start_y - cell_height - 65});
     if (windowM->datas.nMapel == 0)
     {
         DrawTextEx(

@@ -53,11 +53,11 @@ void drawStaffHome(windowModel *windowM)
                 DrawMetricCard("Total Pembayaran", TextFormat("Rp. %d", windowM->datas.pembayaranReport.sumThisMonth), (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 200}, 200, &windowM->fontStyle);
                 DrawMetricCard("Jumlah", TextFormat("%d", windowM->datas.pembayaranReport.totalThisMonth), (Vector2){.x = 1920 / 2 - 600 + 100 + 100 + 210, .y = 200}, 200, &windowM->fontStyle);
                 drawPembayaranReport(windowM);
-                DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
+
                 break;
             case MANAJERSTAFF:
                 drawStaffRead(windowM);
-                DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
+
                 break;
             default:
                 drawWelcomePage(windowM);
@@ -125,27 +125,27 @@ void drawStaffHome(windowModel *windowM)
             {
             case MURID:
                 drawMuridRead(windowM);
-                DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
+
                 break;
             case PENGAJAR:
                 drawPengajarRead(windowM);
-                DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
+
                 break;
             case RUANGAN:
                 drawRuanganRead(windowM);
-                DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
+
                 break;
             case MAPEL:
                 drawMapelRead(windowM);
-                DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
+
                 break;
             case PEMBAYARAN:
                 drawPembayaranRead(windowM);
-                DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
+
                 break;
             case JADWAL:
                 drawJadwalRead(windowM);
-                DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
+
                 break;
             default:
                 drawWelcomePage(windowM);
